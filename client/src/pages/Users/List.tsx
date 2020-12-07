@@ -4,8 +4,12 @@ import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
+interface IUser {
+  username: string;
+}
+
 const List = () => {
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState<IUser[]>([]);
 
   useEffect(() => {
     axios.get('/users/')
