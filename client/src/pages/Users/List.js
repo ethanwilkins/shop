@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+
 const List = () => {
   const [users, setUsers] = useState(null);
 
@@ -18,7 +21,9 @@ const List = () => {
     <>
       {
         users ? users.map((user) => {
-          return <p>{user.username}</p>;
+          return  <p>
+                    <FontAwesomeIcon icon={faUser} /> {user.username}
+                  </p>;
         }) : 'Loading...'
       }
     </>
