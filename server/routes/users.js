@@ -12,8 +12,6 @@ router.route('/create').post((req, res) => {
 
   const newUser = new User({username});
 
-  console.log("Got here...");
-
   newUser.save()
     .then(() => res.json('User added!'))
     .catch(err => res.status(400).json('Error: ' + err));
