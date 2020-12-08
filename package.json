@@ -1,15 +1,20 @@
 {
-  "name": "backend",
+  "name": "shop",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "An e-commerce website built with the MERN stack.",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently \"npm run client\" \"npm run server\"",
+    "start:nowatch": "concurrently \"npm run client\" \"npm run server:nowatch\"",
+    "server": "cd server && nodemon server.ts",
+    "server:nowatch": "cd server && node server.ts",
+    "client": "cd client && npm start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "concurrently": "^5.3.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
