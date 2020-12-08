@@ -20,7 +20,7 @@ mongoose.connect(uri, {
   useCreateIndex: true,
 });
 connection.once("open", () => {
-  console.log("MongoDB database connection established successfully");
+  console.log("MongoDB connection established successfully\n");
 });
 
 app.use(bodyParser.json());
@@ -30,5 +30,5 @@ app.use("/products", productsRouter);
 app.use("/users", usersRouter);
 
 app.listen(port, () => {
-  console.log(`Server is running on port: ${port}`);
+  console.log(`\nServer is running on port: ${port}`);
 });

@@ -4,14 +4,14 @@ import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 
 const SignUp = () => {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const user = {
-      username: username,
+      name: name,
       password: password,
     };
 
@@ -32,8 +32,8 @@ const SignUp = () => {
         <Form.Control
           type="text"
           placeholder="Username"
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
+          onChange={(e) => setName(e.target.value)}
+          value={name}
         />
       </Form.Group>
 
