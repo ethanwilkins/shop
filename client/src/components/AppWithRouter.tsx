@@ -1,14 +1,14 @@
-import React from 'react';
-import { createBrowserHistory } from 'history'
-import { Router, Route, Switch, withRouter } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+import React from "react";
+import { createBrowserHistory } from "history";
+import { Router, Route, Switch, withRouter } from "react-router-dom";
+import { Container } from "react-bootstrap";
 
-import Home from '../pages/Home';
-import SignUp from '../pages/Users/SignUp';
-import UsersList from '../pages/Users/List';
-import ProductsList from '../pages/Products/List';
-import NotFound from '../pages/NotFound';
-import Navbar from './Navbar';
+import Home from "../pages/Home";
+import SignUp from "../pages/Users/SignUp";
+import UsersList from "../pages/Users/List";
+import ProductsList from "../pages/Products/List";
+import NotFound from "../pages/NotFound";
+import Navbar from "./Navbar";
 
 export const history = createBrowserHistory();
 

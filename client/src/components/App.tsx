@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import AppWithRouter from './AppWithRouter';
+import AppWithRouter from "./AppWithRouter";
 
 const App = () => <AppWithRouter />;
 

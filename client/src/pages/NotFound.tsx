@@ -1,7 +1,5 @@
-import React from 'react';
+import React from "react";
 
-const NotFound = () => (
-  <>404</>
-);
+const NotFound = () => <>404</>;
 
 export default NotFound;

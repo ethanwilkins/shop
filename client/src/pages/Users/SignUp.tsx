@@ -1,28 +1,29 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button } from "react-bootstrap";
 
 const SignUp = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const user = {
       username: username,
-      password: password
-    }
+      password: password,
+    };
 
-    axios.post('/users/create', user)
+    axios
+      .post("/users/create", user)
       .then((res) => {
         alert("Success...");
       })
       .catch((err) => {
         alert("You have failed utterly...");
       });
-  }
+  };
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -51,6 +52,6 @@ const SignUp = () => {
       </Button>
     </Form>
   );
-}
+};
 
 export default SignUp;
