@@ -7,8 +7,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 const connection = mongoose.connection;
 
-const productsRouter = require("./routes/products");
-const usersRouter = require("./routes/users");
+const productsRouter = require("./routes/products.routes");
+const usersRouter = require("./routes/users.routes");
 
 require("dotenv").config();
 const uri = process.env.DATABASE_URL;
