@@ -32,10 +32,10 @@ const SignUp = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group>
-        <Form.Label>Username</Form.Label>
+        <Form.Label>Name</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Username"
+          placeholder="Name"
           onChange={(e) => setName(e.target.value)}
           value={name}
         />

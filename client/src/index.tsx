@@ -1,12 +1,30 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./styles/index.scss";
-import App from "./components/App";
-import reportWebVitals from "./reportWebVitals";
+import jwtDecode from "jwt-decode";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 
+import App from "./components/App";
+import setAuthToken from "./setAuthToken";
+import "./styles/index.scss";
+
 axios.defaults.baseURL = "http://localhost:5000";
+
+interface IToken {
+  exp: number;
+}
+
+if (localStorage.jwtToken) {
+  setAuthToken(localStorage.jwtToken);
+  const decoded: IToken = jwtDecode(localStorage.jwtToken);
+  // set current user here
+
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    // log out user here
+    window.location.href = "/login";
+  }
+}
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,8 +32,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
