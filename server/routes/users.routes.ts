@@ -3,8 +3,8 @@ export {};
 const bcrypt = require("bcrypt");
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const validateSignup = require("../../validation/validateSignup");
-const validateLogin = require("../../validation/validateLogin");
+const validateSignup = require("../validation/validateSignup");
+const validateLogin = require("../validation/validateLogin");
 const User = require("../models/user.model");
 
 const router = new express.Router();
