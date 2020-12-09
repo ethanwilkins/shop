@@ -7,6 +7,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 interface IUser {
   name: string;
   email: string;
+  _id: number;
 }
 
 const List = () => {
@@ -29,7 +30,10 @@ const List = () => {
         ? users.map((user) => {
             return (
               <p>
-                <FontAwesomeIcon icon={faUser} /> {user.name} {user.email}
+                <FontAwesomeIcon icon={faUser} />
+                {user.name}
+                {user.email}
+                {user._id}
               </p>
             );
           })
