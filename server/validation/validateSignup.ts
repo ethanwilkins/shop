@@ -36,16 +36,16 @@ module.exports = function validateRegisterInput(data) {
     errors.email = "Email is required";
   }
 
-  if (!validator.isLength(data.password, { min: 6, max: 30 })) {
-    errors.password = "Password must have between 6 and 30 chars";
+  if (!validator.isLength(data.password, { min: 4, max: 30 })) {
+    errors.password = "Password must have between 4 and 30 chars";
   }
 
   if (validator.isEmpty(data.password)) {
     errors.password = "Password is required";
   }
 
-  if (!validator.isLength(data.passwordConfirm, { min: 6, max: 30 })) {
-    errors.passwordConfirm = "Password must have between 6 and 30 chars";
+  if (!validator.isLength(data.passwordConfirm, { min: 4, max: 30 })) {
+    errors.passwordConfirm = "Password must have between 4 and 30 chars";
   }
 
   if (!validator.equals(data.password, data.passwordConfirm)) {

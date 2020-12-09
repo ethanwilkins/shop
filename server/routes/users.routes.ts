@@ -3,7 +3,7 @@ export {};
 const bcrypt = require("bcrypt");
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const validateSignup = require("../validation/validateSignup");
+const validateSignup = require("../validation/validateSignUp");
 const validateLogin = require("../validation/validateLogin");
 const User = require("../models/user.model");
 

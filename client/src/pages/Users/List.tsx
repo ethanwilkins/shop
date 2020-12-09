@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 interface IUser {
-  username: string;
+  name: string;
+  email: string;
 }
 
 const List = () => {
@@ -28,7 +29,7 @@ const List = () => {
         ? users.map((user) => {
             return (
               <p>
-                <FontAwesomeIcon icon={faUser} /> {user.username}
+                <FontAwesomeIcon icon={faUser} /> {user.name} {user.email}
               </p>
             );
           })

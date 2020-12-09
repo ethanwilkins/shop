@@ -5,18 +5,22 @@ import { Form, Button } from "react-bootstrap";
 
 const SignUp = () => {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const user = {
       name: name,
+      email: email,
       password: password,
+      passwordConfirm: passwordConfirm,
     };
 
     axios
-      .post("/users/create", user)
+      .post("/users/signup", user)
       .then((res) => {
         alert("Success...");
       })
@@ -27,7 +31,7 @@ const SignUp = () => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="formBasicEmail">
+      <Form.Group>
         <Form.Label>Username</Form.Label>
         <Form.Control
           type="text"
@@ -37,13 +41,33 @@ const SignUp = () => {
         />
       </Form.Group>
 
-      <Form.Group controlId="formBasicPassword">
+      <Form.Group>
+        <Form.Label>Email</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+        />
+      </Form.Group>
+
+      <Form.Group>
         <Form.Label>Password</Form.Label>
         <Form.Control
           type="password"
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+        />
+      </Form.Group>
+
+      <Form.Group>
+        <Form.Label>Confirm Password</Form.Label>
+        <Form.Control
+          type="password"
+          placeholder="Confirm Password"
+          onChange={(e) => setPasswordConfirm(e.target.value)}
+          value={passwordConfirm}
         />
       </Form.Group>
 
