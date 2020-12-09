@@ -1,13 +1,17 @@
-const router = require("express").Router();
+export {};
+
+const express = require("express");
 let Product = require("../models/product.model");
 
-router.route("/").get((req, res) => {
+const router = new express.Router();
+
+router.get("/", async (req, res) => {
   Product.find()
     .then((products) => res.json(products))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/").post((req, res) => {
+router.post("/", async (req, res) => {
   const description = req.body.description;
   const name = req.body.name;
 
@@ -22,19 +26,19 @@ router.route("/").post((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/:id").get((req, res) => {
+router.get("/:id", async (req, res) => {
   Product.findById(req.params.id)
     .then((product) => res.json(product))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/:id").delete((req, res) => {
+router.delete("/:id", async (req, res) => {
   Product.findByIdAndDelete(req.params.id)
     .then(() => res.json("Product deleted."))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/update/:id").post((req, res) => {
+router.post("/update/:id", async (req, res) => {
   Product.findById(req.params.id)
     .then((product) => {
       product.name = req.body.name;

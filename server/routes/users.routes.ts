@@ -1,23 +1,100 @@
 export {};
 
-const router = require("express").Router();
-let User = require("../models/user.model");
+const bcrypt = require("bcrypt");
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const validateSignup = require("../../validation/validateSignup");
+const validateLogin = require("../../validation/validateLogin");
+const User = require("../models/user.model");
 
-router.route("/").get((req, res) => {
+const router = new express.Router();
+
+// Get all users
+router.get("/", async (req, res) => {
   User.find()
     .then((users) => res.json(users))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route("/create").post((req, res) => {
-  const name = req.body.name;
+// Sign up a user
+router.post("/signup", async (req, res) => {
+  const { errors, isValid } = validateSignup(req.body);
 
-  const newUser = new User({ name });
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
 
-  newUser
-    .save()
-    .then(() => res.json("User added!"))
-    .catch((err) => res.status(400).json("Error: " + err));
+  try {
+    const user = await User.find({ email: req.body.email }).exec();
+    if (user.length > 0) {
+      return res.status(409).json({ error: "Email already exists." });
+    }
+    return bcrypt.hash(req.body.password, 10, (error, hash) => {
+      if (error) {
+        return res.status(500).json({ error });
+      }
+      const newUser = new User({
+        email: req.body.email,
+        name: req.body.name,
+        password: hash,
+      });
+      return newUser
+        .save()
+        .then((result) => {
+          res.status(201).json({ result });
+        })
+        .catch((err) => {
+          res.status(500).json({ error: err });
+        });
+    });
+  } catch (err) {
+    return res.status(500).json({ err });
+  }
+});
+
+// Log in a user
+router.post("/login", async (req, res) => {
+  const { errors, isValid } = validateLogin(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  try {
+    const user = await User.findOne({ email: req.body.email }).exec();
+    if (!user) {
+      return res.status(401).json({
+        email: "Could not find email.",
+      });
+    }
+
+    return bcrypt.compare(req.body.password, user.password, (err, result) => {
+      if (err) {
+        return res.status(401).json({
+          message: "Auth failed.",
+        });
+      }
+      if (result) {
+        const jwtPayload = {
+          name: user.name,
+          email: user.email,
+          id: user.id,
+        };
+        const token = jwt.sign(jwtPayload, process.env.JWT_KEY, {
+          expiresIn: "90d",
+        });
+        return res.status(200).json({
+          message: "Auth successful.",
+          token,
+        });
+      }
+      return res.status(401).json({
+        password: "Wrong password. Try again.",
+      });
+    });
+  } catch (err) {
+    return res.status(500).json({ message: err });
+  }
 });
 
 module.exports = router;
