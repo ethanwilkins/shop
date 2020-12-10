@@ -5,6 +5,7 @@ import { Container } from "react-bootstrap";
 
 import Home from "../pages/Home";
 import SignUp from "../pages/Users/SignUp";
+import Login from "../pages/Users/Login";
 import UsersList from "../pages/Users/List";
 import ProductsList from "../pages/Products/List";
 import NotFound from "../pages/NotFound";
@@ -21,6 +22,7 @@ const Root = () => (
         <Route exact path="/products" component={ProductsList} />
         <Route exact path="/users" component={UsersList} />
         <Route exact path="/sign_up" component={SignUp} />
+        <Route exact path="/login" component={Login} />
         <Route component={NotFound} />
       </Switch>
     </Container>

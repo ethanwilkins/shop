@@ -1,11 +1,11 @@
 interface User {
-  name: string;
+  name?: string;
   email: string;
 }
 
 export interface IUser extends User {
   password: string;
-  passwordConfirm: string;
+  passwordConfirm?: string;
 }
 
 export interface IUserDecoded extends User {

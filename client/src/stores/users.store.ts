@@ -39,15 +39,18 @@ const useUsersStore = create(
             setAuthToken(token);
             const decodedUser: IUserDecoded = jwtDecode(token);
             set({ user: decodedUser, isAuthenticated: true });
+            window.location.href = "/";
           })
-          .catch((err) => {});
+          .catch((err) => {
+            alert(JSON.stringify(err));
+          });
       },
 
       logoutUser: () => {
-        set({ isAuthenticated: false });
+        set({ user: {}, isAuthenticated: false });
         setAuthToken(false);
         localStorage.removeItem("jwtToken");
-        window.location.href = "/";
+        window.location.href = "/login";
       },
     })
   )

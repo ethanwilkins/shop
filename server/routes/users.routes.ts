@@ -66,6 +66,7 @@ router.post("/login", async (req, res) => {
   const { errors, isValid } = validateLogin(req.body);
 
   if (!isValid) {
+    console.log("got here!");
     return res.status(400).json(errors);
   }
 
