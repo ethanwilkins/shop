@@ -41,7 +41,16 @@ router.post("/signup", async (req, res) => {
       return newUser
         .save()
         .then((result) => {
-          res.status(201).json({ result });
+          const jwtPayload = {
+            name: result.name,
+            email: result.email,
+            _id: result._id,
+          };
+          const token = jwt.sign(jwtPayload, process.env.JWT_KEY, {
+            expiresIn: "90d",
+          });
+
+          res.status(201).json({ result, token });
         })
         .catch((err) => {
           res.status(500).json({ error: err });

@@ -18,7 +18,6 @@ const App = () => {
       const currentTime = Date.now() / 1000;
       if (decoded.exp < currentTime) {
         logoutUser();
-        window.location.href = "/login";
       }
     }
   }, [setCurrentUser, logoutUser]);

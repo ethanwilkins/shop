@@ -14,19 +14,20 @@ const useUsersStore = create(
 
     (set) => ({
       setCurrentUser: (user: IUserDecoded) => {
-        set({ user: user });
+        set({ user: user, isAuthenticated: true });
       },
 
       signUpUser: (user: IUser) => {
         axios
           .post("/users/signup", user)
           .then((res) => {
-            alert(JSON.stringify(res));
+            const { token, result } = res.data;
+            localStorage.setItem("jwtToken", token);
+            setAuthToken(token);
+            set({ user: result, isAuthenticated: true });
             window.location.href = "/";
           })
-          .catch((err) => {
-            alert("You have failed utterly...");
-          });
+          .catch((err) => {});
       },
 
       loginUser: (user: IUser) => {
@@ -37,7 +38,7 @@ const useUsersStore = create(
             localStorage.setItem("jwtToken", token);
             setAuthToken(token);
             const decodedUser: IUserDecoded = jwtDecode(token);
-            set({ user: decodedUser });
+            set({ user: decodedUser, isAuthenticated: true });
           })
           .catch((err) => {});
       },
@@ -46,6 +47,7 @@ const useUsersStore = create(
         set({ isAuthenticated: false });
         setAuthToken(false);
         localStorage.removeItem("jwtToken");
+        window.location.href = "/";
       },
     })
   )
