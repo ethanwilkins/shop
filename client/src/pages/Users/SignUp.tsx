@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
-
 import { Form, Button } from "react-bootstrap";
+
+import useUsersStore from "../../stores/users.store";
+import { IUser } from "../../types/User";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -9,24 +10,19 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
+  const { signUpUser } = useUsersStore();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const user = {
+    const user: IUser = {
       name: name,
       email: email,
       password: password,
       passwordConfirm: passwordConfirm,
     };
 
-    axios
-      .post("/users/signup", user)
-      .then((res) => {
-        alert("Success...");
-      })
-      .catch((err) => {
-        alert("You have failed utterly...");
-      });
+    signUpUser(user);
   };
 
   return (
