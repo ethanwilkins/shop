@@ -30,10 +30,7 @@ const List = () => {
         ? users.map((user) => {
             return (
               <p>
-                <FontAwesomeIcon icon={faUser} />
-                {user.name}
-                {user.email}
-                {user._id}
+                <FontAwesomeIcon icon={faUser} /> {user.name}
               </p>
             );
           })
