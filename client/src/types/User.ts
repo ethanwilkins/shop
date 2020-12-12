@@ -1,4 +1,5 @@
 interface User {
+  _id?: string;
   name?: string;
   email: string;
 }
@@ -9,8 +10,11 @@ export interface IUser extends User {
 }
 
 export interface IUserDecoded extends User {
-  name: string;
-  email: string;
-  _id: number;
   exp: number;
+}
+
+export interface IUserResult extends User {
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }

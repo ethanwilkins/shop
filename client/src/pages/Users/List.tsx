@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,9 +30,16 @@ const List = () => {
       {users
         ? users.map((user) => {
             return (
-              <p>
+              <Link
+                to={`users/${user._id}`}
+                style={{
+                  color: "black",
+                  display: "block",
+                  marginBottom: "10px",
+                }}
+              >
                 <FontAwesomeIcon icon={faUser} /> {user.name}
-              </p>
+              </Link>
             );
           })
         : "Loading..."}

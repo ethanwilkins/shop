@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import SignUp from "../pages/Users/SignUp";
 import Login from "../pages/Users/Login";
 import UsersList from "../pages/Users/List";
+import UsersShow from "../pages/Users/Show";
 import ProductsList from "../pages/Products/List";
 import NotFound from "../pages/NotFound";
 import Navbar from "./Navbar";
@@ -21,6 +22,7 @@ const Root = () => (
         <Route exact path="/" component={Home} />
         <Route exact path="/products" component={ProductsList} />
         <Route exact path="/users" component={UsersList} />
+        <Route path="/users/:id" component={UsersShow} />
         <Route exact path="/sign_up" component={SignUp} />
         <Route exact path="/login" component={Login} />
         <Route component={NotFound} />

@@ -18,6 +18,7 @@ app.use(express.json());
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true,
+  useUnifiedTopology: true,
 });
 connection.once("open", () => {
   console.log("MongoDB connection established successfully\n");
