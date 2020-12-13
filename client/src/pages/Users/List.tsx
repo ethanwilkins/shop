@@ -33,7 +33,6 @@ const List = () => {
               <Link
                 to={`users/${user._id}`}
                 style={{
-                  color: "black",
                   display: "block",
                   marginBottom: "10px",
                 }}
