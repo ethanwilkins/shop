@@ -33,9 +33,11 @@ const useUsersStore = create(
         axios
           .delete(`/users/${userId}`)
           .then((res) => {
-            window.location.href = `/users/`;
+            window.location.href = "/users";
           })
-          .catch((err) => {});
+          .catch((err) => {
+            alert("Was not able to delete the user.");
+          });
       },
 
       signUpUser: (user) => {

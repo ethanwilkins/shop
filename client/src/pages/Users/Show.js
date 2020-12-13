@@ -36,7 +36,13 @@ const Show = ({ match }) => {
             <Card.Link href={`/users_edit/${user.name}`}>
               <FontAwesomeIcon icon={faEdit} /> Edit
             </Card.Link>
-            <Card.Link href="" onClick={() => deleteUser(user._id)}>
+            <Card.Link
+              href=""
+              onClick={() =>
+                window.confirm("Are you sure you want to delete this user?") &&
+                deleteUser(user._id)
+              }
+            >
               <FontAwesomeIcon icon={faTrash} /> Delete
             </Card.Link>
           </Card.Body>
