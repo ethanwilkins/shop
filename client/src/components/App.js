@@ -10,7 +10,6 @@ const App = () => {
 
   useEffect(() => {
     if (localStorage.jwtToken) {
-      alert("Hello!");
       setAuthToken(localStorage.jwtToken);
       const decoded = jwtDecode(localStorage.jwtToken);
       setCurrentUser(decoded);
