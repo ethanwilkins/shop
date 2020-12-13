@@ -5,6 +5,7 @@ import useUsersStore from "../stores/users.store";
 
 const Navbar = () => {
   const isAuthenticated = useUsersStore((state) => state.isAuthenticated);
+  const user = useUsersStore((state) => state.user);
   const { logoutUser } = useUsersStore();
 
   return (
@@ -31,11 +32,26 @@ const Navbar = () => {
           </li>
 
           {isAuthenticated ? (
-            <li className="navbar-item">
-              <Link to="#" onClick={() => logoutUser()} className="nav-link">
-                Log out
-              </Link>
-            </li>
+            <>
+              <li className="navbar-item">
+                <Link to={`/users/${user.name}`} className="nav-link">
+                  {user.name}
+                </Link>
+              </li>
+
+              <li className="navbar-item">
+                <Link
+                  to="#"
+                  onClick={() =>
+                    window.confirm("Are you sure you want to log out?") &&
+                    logoutUser()
+                  }
+                  className="nav-link"
+                >
+                  Log out
+                </Link>
+              </li>
+            </>
           ) : (
             <>
               <li className="navbar-item">
