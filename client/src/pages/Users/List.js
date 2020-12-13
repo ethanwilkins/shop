@@ -5,14 +5,8 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-interface IUser {
-  name: string;
-  email: string;
-  _id: number;
-}
-
 const List = () => {
-  const [users, setUsers] = useState<IUser[]>([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     axios

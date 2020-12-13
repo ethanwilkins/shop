@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 import useUsersStore from "../../stores/users.store";
-import { IUser } from "../../types/User";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -15,7 +14,7 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const user: IUser = {
+    const user = {
       name: name,
       email: email,
       password: password,

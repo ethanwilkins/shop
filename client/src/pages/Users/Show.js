@@ -4,17 +4,8 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-import { IUserResult } from "../../types/User";
-
 const Show = ({ match }) => {
-  const [user, setUser] = useState<IUserResult>({
-    name: "",
-    email: "",
-    _id: "",
-    createdAt: "",
-    updatedAt: "",
-    __v: 0,
-  });
+  const [user, setUser] = useState(null);
 
   const userId = match.params.id;
 
