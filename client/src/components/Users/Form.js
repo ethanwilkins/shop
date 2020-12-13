@@ -9,7 +9,7 @@ const UserForm = ({ user, isEditing }) => {
   const [userPassword, setUserPassword] = useState("");
   const [userPasswordConfirm, setUserPasswordConfirm] = useState("");
 
-  const { signUpUser } = useUsersStore();
+  const { updateUser, signUpUser } = useUsersStore();
 
   useEffect(() => {
     if (isEditing) {
@@ -29,7 +29,8 @@ const UserForm = ({ user, isEditing }) => {
     };
 
     if (isEditing) {
-      alert(JSON.stringify(userObj));
+      userObj._id = user._id;
+      updateUser(userObj);
     } else {
       signUpUser(userObj);
     }
@@ -57,28 +58,32 @@ const UserForm = ({ user, isEditing }) => {
         />
       </Form.Group>
 
-      <Form.Group>
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setUserPassword(e.target.value)}
-          value={userPassword}
-        />
-      </Form.Group>
+      {!isEditing && (
+        <>
+          <Form.Group>
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setUserPassword(e.target.value)}
+              value={userPassword}
+            />
+          </Form.Group>
 
-      <Form.Group>
-        <Form.Label>Confirm Password</Form.Label>
-        <Form.Control
-          type="password"
-          placeholder="Confirm Password"
-          onChange={(e) => setUserPasswordConfirm(e.target.value)}
-          value={userPasswordConfirm}
-        />
-      </Form.Group>
+          <Form.Group>
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Confirm Password"
+              onChange={(e) => setUserPasswordConfirm(e.target.value)}
+              value={userPasswordConfirm}
+            />
+          </Form.Group>
+        </>
+      )}
 
       <Button variant="primary" type="submit">
-        Sign up
+        {isEditing ? "Save" : "Sign up"}
       </Button>
     </Form>
   );

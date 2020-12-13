@@ -31,6 +31,7 @@ const List = () => {
                 display: "block",
                 marginBottom: "10px",
               }}
+              key={user._id}
             >
               <FontAwesomeIcon icon={faUser} /> {user.name}
             </Link>

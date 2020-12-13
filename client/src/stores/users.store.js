@@ -16,6 +16,19 @@ const useUsersStore = create(
         set({ user: user, isAuthenticated: true });
       },
 
+      updateUser: (user) => {
+        axios
+          .patch(`/users/${user._id}`, user)
+          .then((res) => {
+            const { token, user } = res.data;
+            localStorage.setItem("jwtToken", token);
+            setAuthToken(token);
+            set({ user: user });
+            window.location.href = `/users/${user.name}`;
+          })
+          .catch((err) => {});
+      },
+
       signUpUser: (user) => {
         axios
           .post("/users/signup", user)

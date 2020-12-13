@@ -32,7 +32,11 @@ const Navbar = () => {
 
           {isAuthenticated ? (
             <li className="navbar-item">
-              <Link onClick={() => logoutUser()} className="nav-link">
+              <Link
+                to="/login"
+                onClick={() => logoutUser()}
+                className="nav-link"
+              >
                 Log out
               </Link>
             </li>

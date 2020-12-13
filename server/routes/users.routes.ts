@@ -35,6 +35,46 @@ router.get("/", async (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+// Update a user
+router.patch("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          email: req.body.email,
+          name: req.body.name,
+        },
+      },
+      { new: true, upsert: true, setDefaultsOnInsert: true },
+      (err) => {
+        if (err != null && err.name === "MongoError" && err.code === 11000) {
+          return res
+            .status(500)
+            .send({ message: "This email is already in use." });
+        }
+      }
+    );
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    const jwtPayload = {
+      name: user.name,
+      email: user.email,
+      userId: user._id,
+    };
+    const token = jwt.sign(jwtPayload, process.env.JWT_KEY, {
+      expiresIn: "90d",
+    });
+
+    return res.json({ user, token });
+  } catch (err) {
+    return res.status(500).json({ message: err });
+  }
+});
+
 // Sign up a user
 router.post("/signup", async (req, res) => {
   const { errors, isValid } = validateSignup(req.body);
@@ -63,7 +103,7 @@ router.post("/signup", async (req, res) => {
           const jwtPayload = {
             name: result.name,
             email: result.email,
-            _id: result._id,
+            userId: result._id,
           };
           const token = jwt.sign(jwtPayload, process.env.JWT_KEY, {
             expiresIn: "90d",
@@ -106,7 +146,7 @@ router.post("/login", async (req, res) => {
         const jwtPayload = {
           name: user.name,
           email: user.email,
-          _id: user._id,
+          userId: user._id,
         };
         const token = jwt.sign(jwtPayload, process.env.JWT_KEY, {
           expiresIn: "90d",
