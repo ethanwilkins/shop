@@ -3,7 +3,6 @@ import { combine } from "zustand/middleware";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import setAuthToken from "../setAuthToken";
-import { IUser, IUserDecoded } from "../types/User";
 
 const useUsersStore = create(
   combine(
@@ -13,11 +12,11 @@ const useUsersStore = create(
     },
 
     (set) => ({
-      setCurrentUser: (user: IUserDecoded) => {
+      setCurrentUser: (user) => {
         set({ user: user, isAuthenticated: true });
       },
 
-      signUpUser: (user: IUser) => {
+      signUpUser: (user) => {
         axios
           .post("/users/signup", user)
           .then((res) => {
@@ -30,14 +29,14 @@ const useUsersStore = create(
           .catch((err) => {});
       },
 
-      loginUser: (user: IUser) => {
+      loginUser: (user) => {
         axios
           .post("/users/login", user)
           .then((res) => {
             const { token } = res.data;
             localStorage.setItem("jwtToken", token);
             setAuthToken(token);
-            const decodedUser: IUserDecoded = jwtDecode(token);
+            const decodedUser = jwtDecode(token);
             set({ user: decodedUser, isAuthenticated: true });
             window.location.href = "/";
           })

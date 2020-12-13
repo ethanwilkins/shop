@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 import useUsersStore from "../../stores/users.store";
-import { IUser } from "../../types/User";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +12,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const user: IUser = {
+    const user = {
       email: email,
       password: password,
     };
