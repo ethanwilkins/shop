@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
 import { Spinner } from "react-bootstrap";
+
+import UserForm from "../../components/Users/Form";
 
 const Edit = ({ match }) => {
   const [user, setUser] = useState(null);
@@ -16,7 +19,13 @@ const Edit = ({ match }) => {
   }, [userName]);
 
   return (
-    <>{user ? <>Will edit user here...</> : <Spinner animation="border" />}</>
+    <>
+      {user ? (
+        <UserForm user={user} isEditing={true} />
+      ) : (
+        <Spinner animation="border" />
+      )}
+    </>
   );
 };
 
