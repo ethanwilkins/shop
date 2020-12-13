@@ -4,6 +4,7 @@ import axios from "axios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { Spinner } from "react-bootstrap";
 
 const List = () => {
   const [users, setUsers] = useState([]);
@@ -21,21 +22,23 @@ const List = () => {
 
   return (
     <>
-      {users
-        ? users.map((user) => {
-            return (
-              <Link
-                to={`users/${user._id}`}
-                style={{
-                  display: "block",
-                  marginBottom: "10px",
-                }}
-              >
-                <FontAwesomeIcon icon={faUser} /> {user.name}
-              </Link>
-            );
-          })
-        : "Loading..."}
+      {users ? (
+        users.map((user) => {
+          return (
+            <Link
+              to={`users/${user.name}`}
+              style={{
+                display: "block",
+                marginBottom: "10px",
+              }}
+            >
+              <FontAwesomeIcon icon={faUser} /> {user.name}
+            </Link>
+          );
+        })
+      ) : (
+        <Spinner animation="border" />
+      )}
     </>
   );
 };

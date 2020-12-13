@@ -1,8 +1,10 @@
+$darkGray: rgb(50, 50, 50);
+
 a {
-  color: black;
+  color: $darkGray;
 }
 
 a:hover {
-  color: black;
+  color: $darkGray;
   text-decoration: none;
 }

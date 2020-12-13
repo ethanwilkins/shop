@@ -9,12 +9,15 @@ const User = require("../models/user.model");
 
 const router = new express.Router();
 
-// Get a user by their id
-router.get("/:id", async (req, res) => {
-  const { id } = req.params;
+// Get a user by their name
+router.get("/:name", async (req, res) => {
+  const { name } = req.params;
 
   try {
-    const user = await User.findById(id);
+    const user = await User.findOne({
+      name: new RegExp("^" + name + "$", "i"),
+    });
+
     if (user) {
       res.json({ user });
     } else {

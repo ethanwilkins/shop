@@ -2,30 +2,44 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Card, Spinner } from "react-bootstrap";
 
 const Show = ({ match }) => {
   const [user, setUser] = useState(null);
 
-  const userId = match.params.id;
+  const userName = match.params.name;
 
   useEffect(() => {
     axios
-      .get(`/users/${userId}`)
+      .get(`/users/${userName}`)
       .then((res) => {
         setUser(res.data.user);
       })
       .catch((err) => {});
-  }, [userId]);
+  }, [userName]);
 
   return (
     <>
       {user ? (
-        <>
-          <FontAwesomeIcon icon={faUser} /> {user.name}
-        </>
+        <Card style={{ width: "18rem" }}>
+          <Card.Body>
+            <Card.Title>
+              <FontAwesomeIcon icon={faUser} /> {user.name}
+            </Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">
+              Joined {user.createdAt}
+            </Card.Subtitle>
+            <Card.Link href={`/users_edit/${user.name}`}>
+              <FontAwesomeIcon icon={faEdit} /> Edit
+            </Card.Link>
+            <Card.Link>
+              <FontAwesomeIcon icon={faTrash} /> Delete
+            </Card.Link>
+          </Card.Body>
+        </Card>
       ) : (
-        "Loading..."
+        <Spinner animation="border" />
       )}
     </>
   );
