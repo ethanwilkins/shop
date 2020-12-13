@@ -29,6 +29,15 @@ const useUsersStore = create(
           .catch((err) => {});
       },
 
+      deleteUser: (userId) => {
+        axios
+          .delete(`/users/${userId}`)
+          .then((res) => {
+            window.location.href = `/users/`;
+          })
+          .catch((err) => {});
+      },
+
       signUpUser: (user) => {
         axios
           .post("/users/signup", user)

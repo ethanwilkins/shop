@@ -5,10 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Card, Spinner } from "react-bootstrap";
 
+import useUsersStore from "../../stores/users.store";
+
 const Show = ({ match }) => {
   const [user, setUser] = useState(null);
-
   const userName = match.params.name;
+
+  const { deleteUser } = useUsersStore();
 
   useEffect(() => {
     axios
@@ -33,7 +36,7 @@ const Show = ({ match }) => {
             <Card.Link href={`/users_edit/${user.name}`}>
               <FontAwesomeIcon icon={faEdit} /> Edit
             </Card.Link>
-            <Card.Link>
+            <Card.Link href="" onClick={() => deleteUser(user._id)}>
               <FontAwesomeIcon icon={faTrash} /> Delete
             </Card.Link>
           </Card.Body>
