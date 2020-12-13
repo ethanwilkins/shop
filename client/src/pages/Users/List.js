@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { Spinner } from "react-bootstrap";
+
+import UserCard from "../../components/Users/Card";
 
 const List = () => {
   const [users, setUsers] = useState([]);
@@ -24,18 +23,7 @@ const List = () => {
     <>
       {users ? (
         users.map((user) => {
-          return (
-            <Link
-              to={`users/${user.name}`}
-              style={{
-                display: "block",
-                marginBottom: "10px",
-              }}
-              key={user._id}
-            >
-              <FontAwesomeIcon icon={faUser} /> {user.name}
-            </Link>
-          );
+          return <UserCard user={user} />;
         })
       ) : (
         <Spinner animation="border" />
