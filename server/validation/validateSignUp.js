@@ -1,15 +1,8 @@
 const validator = require("validator");
 const isEmpty = require("is-empty");
 
-interface IErrors {
-  email?: string;
-  password?: string;
-  passwordConfirm?: string;
-  name?: string;
-}
-
 module.exports = function validateRegisterInput(data) {
-  let errors: IErrors = {};
+  let errors = {};
 
   /* eslint-disable no-param-reassign */
   data.name = !isEmpty(data.name) ? data.name : "";
