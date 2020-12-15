@@ -5,12 +5,12 @@ const Image = require("../models/image.model");
 const multerUpload = require("../config/multer");
 const router = new express.Router();
 
-// fs, promisify, and unlink to delete img
+// fs, promisify, and unlink to delete image file
 const fs = require("fs");
 const { promisify } = require("util");
 const unlinkAsync = promisify(fs.unlink);
 
-// upload new image
+// Upload new image
 router
   .route("/upload")
   .post(multerUpload.single("imageData"), async (req, res) => {
@@ -58,9 +58,12 @@ router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const image = await Image.findById(id);
-    // Removes the image file from /uploads folder
-    await unlinkAsync("uploads/" + image.path);
+    Image.findById(id)
+      .then(async (image) => {
+        // Removes the image file from /uploads folder
+        await unlinkAsync("uploads/" + image.path);
+      })
+      .catch((err) => {});
     // Removes Image from MongoDB
     await Image.deleteOne({ _id: id }).exec();
     res.status(200).json({ message: "Successfully deleted image." });
