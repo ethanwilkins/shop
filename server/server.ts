@@ -7,8 +7,9 @@ const app = express();
 const port = process.env.PORT || 5000;
 const connection = mongoose.connection;
 
-const productsRouter = require("./routes/products.routes");
 const usersRouter = require("./routes/users.routes");
+const imagesRouter = require("./routes/images.routes");
+const productsRouter = require("./routes/products.routes");
 
 require("dotenv").config();
 const uri = process.env.DATABASE_URL;
@@ -28,8 +29,9 @@ connection.once("open", () => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/products", productsRouter);
 app.use("/users", usersRouter);
+app.use("/images", imagesRouter);
+app.use("/products", productsRouter);
 
 app.listen(port, () => {
   console.log(`\nServer is running on port: ${port}`);
