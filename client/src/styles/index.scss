@@ -1,4 +1,5 @@
 $darkGray: rgb(50, 50, 50);
+$lightGray: rgb(245, 245, 245);
 
 a {
   color: $darkGray;
@@ -7,4 +8,8 @@ a {
 a:hover {
   color: $darkGray;
   text-decoration: none;
+}
+
+body {
+  background: $lightGray;
 }
