@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
+import { FormGroup, TextField, Button } from "@material-ui/core";
 
 import useUsersStore from "../../stores/users.store";
 
@@ -37,55 +37,63 @@ const UserForm = ({ user, isEditing }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group>
-        <Form.Label>Name</Form.Label>
-        <Form.Control
+    <form onSubmit={handleSubmit}>
+      <FormGroup>
+        <TextField
           type="text"
           placeholder="Name"
           onChange={(e) => setUserName(e.target.value)}
           value={userName}
+          variant="outlined"
+          margin="normal"
+          label="Name"
         />
-      </Form.Group>
+      </FormGroup>
 
-      <Form.Group>
-        <Form.Label>Email</Form.Label>
-        <Form.Control
+      <FormGroup>
+        <TextField
           type="text"
           placeholder="Email"
           onChange={(e) => setUserEmail(e.target.value)}
           value={userEmail}
+          variant="outlined"
+          margin="normal"
+          label="Email"
         />
-      </Form.Group>
+      </FormGroup>
 
       {!isEditing && (
         <>
-          <Form.Group>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
+          <FormGroup>
+            <TextField
               type="password"
               placeholder="Password"
               onChange={(e) => setUserPassword(e.target.value)}
               value={userPassword}
+              variant="outlined"
+              margin="normal"
+              label="Password"
             />
-          </Form.Group>
+          </FormGroup>
 
-          <Form.Group>
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
+          <FormGroup>
+            <TextField
               type="password"
               placeholder="Confirm Password"
               onChange={(e) => setUserPasswordConfirm(e.target.value)}
               value={userPasswordConfirm}
+              variant="outlined"
+              margin="normal"
+              label="Confirm Password"
             />
-          </Form.Group>
+          </FormGroup>
         </>
       )}
 
-      <Button variant="primary" type="submit">
+      <Button variant="contained" color="primary" type="submit">
         {isEditing ? "Save" : "Sign up"}
       </Button>
-    </Form>
+    </form>
   );
 };
 
