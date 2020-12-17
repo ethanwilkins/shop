@@ -1,39 +1,65 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { Card } from "react-bootstrap";
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
+  makeStyles,
+} from "@material-ui/core";
+import { AccountCircle, Edit, Delete } from "@material-ui/icons";
 
 import useUsersStore from "../../stores/users.store";
 
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 300,
+    marginBottom: 12,
+  },
+  title: {
+    fontSize: 14,
+  },
+});
+
 const Show = ({ user }) => {
-  const { name, _id, createdAt } = user;
+  const { name, email, _id, createdAt } = user;
   const { deleteUser } = useUsersStore();
+  const classes = useStyles();
 
   return (
-    <Card style={{ width: "18rem", marginBottom: "10px" }}>
-      <Card.Body>
-        <Card.Title>
+    <Card className={classes.root} variant="outlined">
+      <CardContent>
+        <Typography
+          className={classes.title}
+          color="textSecondary"
+          gutterBottom
+        >
           <Link to={`/users/${name}`}>
-            <FontAwesomeIcon icon={faUser} /> {name}
+            <AccountCircle /> {name}
           </Link>
-        </Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">
+        </Typography>
+        <Typography variant="body2" component="p">
           Joined {createdAt}
-        </Card.Subtitle>
-        <Card.Link href={`/users_edit/${name}`}>
-          <FontAwesomeIcon icon={faEdit} /> Edit
-        </Card.Link>
-        <Card.Link
-          href=""
+        </Typography>
+        <Typography variant="body2" component="p">
+          {email}
+        </Typography>
+      </CardContent>
+      <CardActions classes={classes.actions}>
+        <Link to={`/users_edit/${name}`}>
+          <Edit /> Edit
+        </Link>
+
+        <Link
+          to="/#"
           onClick={() =>
             window.confirm("Are you sure you want to delete this user?") &&
             deleteUser(_id)
           }
         >
-          <FontAwesomeIcon icon={faTrash} /> Delete
-        </Card.Link>
-      </Card.Body>
+          <Delete /> Delete
+        </Link>
+      </CardActions>
     </Card>
   );
 };

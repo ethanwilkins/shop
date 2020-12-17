@@ -90,7 +90,7 @@ const UserForm = ({ user, isEditing }) => {
         </>
       )}
 
-      <Button variant="contained" color="primary" type="submit">
+      <Button variant="outlined" color="default" size="large" type="submit">
         {isEditing ? "Save" : "Sign up"}
       </Button>
     </form>
