@@ -1,75 +1,94 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Button,
+  Tabs,
+  Tab,
+  makeStyles,
+} from "@material-ui/core";
+import { Menu } from "@material-ui/icons";
+
 import useUsersStore from "../stores/users.store";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginBottom: "50px",
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+  noTextTransform: {
+    textTransform: "none",
+  },
+}));
 
 const Navbar = () => {
   const isAuthenticated = useUsersStore((state) => state.isAuthenticated);
   const user = useUsersStore((state) => state.user);
   const { logoutUser } = useUsersStore();
+  const classes = useStyles();
 
   return (
-    <nav
-      className="navbar navbar-dark bg-dark navbar-expand-lg"
-      style={{ marginBottom: "50px" }}
-    >
-      <Link to="/" className="navbar-brand">
-        Shop
-      </Link>
+    <div className={classes.root}>
+      <AppBar color="default" position="static">
+        <Toolbar>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+            hidden
+          >
+            <Menu />
+          </IconButton>
 
-      <div className="collpase navbar-collapse">
-        <ul className="navbar-nav mr-auto">
-          <li className="navbar-item">
-            <Link to="/products" className="nav-link">
-              Products
-            </Link>
-          </li>
+          <Typography variant="h6" className={classes.title}>
+            Shop
+          </Typography>
 
-          <li className="navbar-item">
-            <Link to="/users" className="nav-link">
-              Users
-            </Link>
-          </li>
+          <Tabs aria-label="simple tabs example">
+            <Tab label="Products" className={classes.noTextTransform} />
+            <Tab label="Users" className={classes.noTextTransform} />
+          </Tabs>
 
           {isAuthenticated ? (
             <>
-              <li className="navbar-item">
-                <Link to={`/users/${user.name}`} className="nav-link">
-                  {user.name}
-                </Link>
-              </li>
-
-              <li className="navbar-item">
-                <Link
-                  to="#"
-                  onClick={() =>
-                    window.confirm("Are you sure you want to log out?") &&
-                    logoutUser()
-                  }
-                  className="nav-link"
-                >
-                  Log out
-                </Link>
-              </li>
+              <Button color="inherit" className={classes.noTextTransform}>
+                {user.name}
+              </Button>
+              <Button
+                onClick={() =>
+                  window.confirm("Are you sure you want to log out?") &&
+                  logoutUser()
+                }
+                color="inherit"
+                className={classes.noTextTransform}
+              >
+                Log out
+              </Button>
             </>
           ) : (
             <>
-              <li className="navbar-item">
-                <Link to="/login" className="nav-link">
-                  Log in
-                </Link>
-              </li>
-
-              <li className="navbar-item">
-                <Link to="/sign_up" className="nav-link">
-                  Sign up
-                </Link>
-              </li>
+              <Button color="inherit" className={classes.noTextTransform}>
+                Log in
+              </Button>
+              <Button color="inherit" className={classes.noTextTransform}>
+                Sign up
+              </Button>
             </>
           )}
-        </ul>
-      </div>
-    </nav>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 };
 
