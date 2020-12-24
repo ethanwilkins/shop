@@ -10,6 +10,7 @@ import UsersList from "../pages/Users/List";
 import UsersShow from "../pages/Users/Show";
 import UsersEdit from "../pages/Users/Edit";
 import ProductsList from "../pages/Products/List";
+import ImagesList from "../pages/Images/List";
 import NotFound from "../pages/NotFound";
 import Navbar from "./Navbar";
 
@@ -23,6 +24,7 @@ const Root = () => (
         <Route exact path="/" component={Home} />
         <Route exact path="/products" component={ProductsList} />
         <Route exact path="/users" component={UsersList} />
+        <Route exact path="/images" component={ImagesList} />
         <Route path="/users/:name" component={UsersShow} />
         <Route path="/users_edit/:name" component={UsersEdit} />
         <Route exact path="/sign_up" component={SignUp} />

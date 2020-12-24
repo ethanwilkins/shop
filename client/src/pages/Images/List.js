@@ -4,18 +4,18 @@ import axios from "axios";
 import { Spinner } from "react-bootstrap";
 
 const List = () => {
-  const [products, setProducts] = useState(null);
+  const [images, setImages] = useState(null);
 
   useEffect(() => {
     axios
-      .get("/products/")
+      .get("/images/")
       .then((res) => {
-        setProducts(res.data);
+        setImages(res.data);
       })
       .catch((err) => {});
   }, []);
 
-  return <>{products ? "Products" : <Spinner animation="border" />}</>;
+  return <>{images ? "Images" : <Spinner animation="border" />}</>;
 };
 
 export default List;

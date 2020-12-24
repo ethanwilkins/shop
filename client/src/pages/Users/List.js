@@ -6,7 +6,7 @@ import { Spinner } from "react-bootstrap";
 import UserCard from "../../components/Users/Card";
 
 const List = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(null);
 
   useEffect(() => {
     axios
