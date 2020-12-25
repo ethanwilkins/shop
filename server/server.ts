@@ -32,6 +32,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/users", usersRouter);
 app.use("/images", imagesRouter);
 app.use("/products", productsRouter);
+app.use("/uploads", express.static("uploads"));
 
 app.listen(port, () => {
   console.log(`\nServer is running on port: ${port}`);

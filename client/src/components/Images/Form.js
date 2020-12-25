@@ -4,8 +4,8 @@ import axios from "axios";
 import { FormGroup, Input, TextField, Button } from "@material-ui/core";
 
 const ImageForm = () => {
-  const [image, setImage] = useState(null);
-  const [imageName, setImageName] = useState(null);
+  const [image, setImage] = useState("");
+  const [imageName, setImageName] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -22,6 +22,10 @@ const List = () => {
       {images ? (
         <>
           <ImageForm />
+
+          {images.map(({ _id, path }) => {
+            return <img src={"/" + path} alt={path} key={_id} />;
+          })}
         </>
       ) : (
         <Spinner animation="border" />
