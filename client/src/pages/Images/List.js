@@ -3,6 +3,8 @@ import axios from "axios";
 
 import { Spinner } from "react-bootstrap";
 
+import ImageForm from "../../components/Images/Form";
+
 const List = () => {
   const [images, setImages] = useState(null);
 
@@ -15,7 +17,17 @@ const List = () => {
       .catch((err) => {});
   }, []);
 
-  return <>{images ? "Images" : <Spinner animation="border" />}</>;
+  return (
+    <>
+      {images ? (
+        <>
+          <ImageForm />
+        </>
+      ) : (
+        <Spinner animation="border" />
+      )}
+    </>
+  );
 };
 
 export default List;

@@ -10,24 +10,23 @@ const fs = require("fs");
 const { promisify } = require("util");
 const unlinkAsync = promisify(fs.unlink);
 
-// Upload new image
-router
-  .route("/upload")
-  .post(multerUpload.single("imageData"), async (req, res) => {
-    const newImage = new Image({
-      name: req.body.imageName,
-      path: req.file.path,
-    });
-    try {
-      const image = await newImage.save();
-      return res.status(200).json({
-        success: true,
-        image: image,
-      });
-    } catch (err) {
-      return res.status(400).send(err);
-    }
+// Upload a new image
+router.route("/").post(multerUpload.single("image"), async (req, res) => {
+  console.log(req);
+  const newImage = new Image({
+    name: req.body.name,
+    path: req.file.path,
   });
+  try {
+    const image = await newImage.save();
+    return res.status(200).json({
+      success: true,
+      image: image,
+    });
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+});
 
 // Get an image by their id
 router.get("/:id", async (req, res) => {

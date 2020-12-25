@@ -6,6 +6,9 @@
 /.pnp
 .pnp.js
 
+# uploads
+/server/uploads
+
 # testing
 /coverage
 
@@ -45,8 +48,8 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
-/backend/.env
-/backend/.env.test
+/server/.env
+/server/.env.test
 
 # misc
 .DS_Store
