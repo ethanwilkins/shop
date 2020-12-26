@@ -24,7 +24,8 @@ const List = () => {
           <ImageForm />
 
           {images.map(({ _id, path }) => {
-            return <img src={"/" + path} alt={path} key={_id} />;
+            const url = "/" + path;
+            return <img src={url} alt={url} key={_id} />;
           })}
         </>
       ) : (
