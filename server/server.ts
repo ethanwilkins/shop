@@ -23,7 +23,7 @@ mongoose.connect(uri, {
   useFindAndModify: false,
 });
 connection.once("open", () => {
-  console.log("MongoDB connection established successfully\n");
+  console.log("MongoDB connection established successfully 🌎\n");
 });
 
 app.use(bodyParser.json({ extended: true, limit: "10mb" }));
@@ -35,5 +35,5 @@ app.use("/products", productsRouter);
 app.use("/uploads", express.static("uploads"));
 
 app.listen(port, () => {
-  console.log(`\n🌎 ==> Server is running on port: ${port}`);
+  console.log(`\nServer is running on port: ${port}`);
 });

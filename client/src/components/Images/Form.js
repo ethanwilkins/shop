@@ -17,7 +17,7 @@ const ImageForm = () => {
     axios
       .post("/images", formData)
       .then((res) => {
-        alert(JSON.stringify(res));
+        console.log(JSON.stringify(res));
       })
       .catch((err) => {
         alert(JSON.stringify(err));
@@ -25,7 +25,7 @@ const ImageForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ marginBottom: "12px" }}>
       <FormGroup>
         <TextField
           type="text"

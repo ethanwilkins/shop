@@ -8,11 +8,9 @@ const imageSchema = new Schema(
   {
     userId: {
       type: Number,
-      unique: true,
     },
     productId: {
       type: Number,
-      unique: true,
     },
     name: {
       type: String,
