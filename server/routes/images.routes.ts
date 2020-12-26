@@ -59,7 +59,9 @@ router.delete("/:id", async (req, res) => {
     Image.findById(id)
       .then(async (image) => {
         // Removes the image file from /uploads folder
-        await unlinkAsync("uploads/" + image.path);
+        console.log(image.path);
+        await unlinkAsync(image.path);
+        console.log("got here! 2");
       })
       .catch((err) => {});
     // Removes Image from MongoDB

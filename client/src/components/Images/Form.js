@@ -17,7 +17,7 @@ const ImageForm = () => {
     axios
       .post("/images", formData)
       .then((res) => {
-        console.log(JSON.stringify(res));
+        window.location.href = "/images";
       })
       .catch((err) => {
         alert(JSON.stringify(err));
