@@ -35,11 +35,15 @@ const List = () => {
         <>
           <ImageForm />
 
-          {images.map(({ _id, name, path }) => {
-            const url = "/" + path;
+          {images.map(({ _id, path }) => {
             return (
               <div>
-                <img src={url} alt={`${url}, (${name})`} key={_id} />
+                <img
+                  src={path}
+                  alt={path}
+                  key={_id}
+                  style={{ width: 300, display: "block" }}
+                />
 
                 <Delete
                   onClick={() =>
@@ -47,6 +51,7 @@ const List = () => {
                       "Are you sure you want to delete this image?"
                     ) && deleteImage(_id)
                   }
+                  style={{ cursor: "pointer", marginBottom: 12 }}
                 />
               </div>
             );
