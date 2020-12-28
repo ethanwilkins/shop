@@ -5,7 +5,7 @@ import { FormGroup, Input, Button } from "@material-ui/core";
 
 import useUsersStore from "../../stores/users.store";
 
-const ImageForm = () => {
+const ImagesForm = () => {
   const [image, setImage] = useState("");
   const user = useUsersStore((state) => state.user);
 
@@ -43,4 +43,4 @@ const ImageForm = () => {
   );
 };
 
-export default ImageForm;
+export default ImagesForm;
