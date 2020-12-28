@@ -21,9 +21,7 @@ const List = () => {
   const deleteImage = (id) => {
     axios
       .delete(`/images/${id}`)
-      .then((res) => {
-        window.location.href = "/images";
-      })
+      .then((res) => {})
       .catch((err) => {
         alert("Was not able to delete the image.");
       });
