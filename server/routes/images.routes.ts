@@ -13,6 +13,7 @@ const unlinkAsync = promisify(fs.unlink);
 // Upload a new image
 router.route("/").post(multerUpload.single("image"), async (req, res) => {
   const newImage = new Image({
+    userId: req.body.userId,
     name: req.body.name,
     path: req.file.path,
   });
@@ -23,6 +24,7 @@ router.route("/").post(multerUpload.single("image"), async (req, res) => {
       image: image,
     });
   } catch (err) {
+    console.log(err);
     return res.status(400).send(err);
   }
 });

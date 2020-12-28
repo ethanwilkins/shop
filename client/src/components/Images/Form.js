@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-import { FormGroup, Input, TextField, Button } from "@material-ui/core";
+import { FormGroup, Input, Button } from "@material-ui/core";
+
+import useUsersStore from "../../stores/users.store";
 
 const ImageForm = () => {
   const [image, setImage] = useState("");
-  const [imageName, setImageName] = useState("");
+  const user = useUsersStore((state) => state.user);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = new FormData();
+    formData.append("userId", user.userId);
     formData.append("image", image);
-    formData.append("name", imageName);
 
     axios
       .post("/images", formData)
@@ -26,18 +28,6 @@ const ImageForm = () => {
 
   return (
     <form onSubmit={handleSubmit} style={{ marginBottom: "12px" }}>
-      <FormGroup>
-        <TextField
-          type="text"
-          placeholder="Name"
-          onChange={(e) => setImageName(e.target.value)}
-          value={imageName}
-          variant="outlined"
-          margin="normal"
-          label="Name"
-        />
-      </FormGroup>
-
       <FormGroup>
         <Input
           type="file"

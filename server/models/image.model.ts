@@ -7,14 +7,10 @@ const Schema = mongoose.Schema;
 const imageSchema = new Schema(
   {
     userId: {
-      type: Number,
+      type: String,
     },
     productId: {
       type: Number,
-    },
-    name: {
-      type: String,
-      required: true,
     },
     path: {
       type: String,
