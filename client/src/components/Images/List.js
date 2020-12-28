@@ -20,11 +20,10 @@ const List = ({ images }) => {
         .reverse()
         .map(({ _id, path }) => {
           return (
-            <div>
+            <div key={_id}>
               <img
-                src={path}
+                src={"/" + path}
                 alt={path}
-                key={_id}
                 style={{ width: 300, display: "block" }}
               />
 

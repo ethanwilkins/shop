@@ -23,7 +23,7 @@ const List = () => {
     <>
       {users ? (
         users.map((user) => {
-          return <UserCard user={user} />;
+          return <UserCard user={user} key={user._id} />;
         })
       ) : (
         <Spinner animation="border" />
