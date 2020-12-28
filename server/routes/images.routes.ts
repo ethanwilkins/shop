@@ -14,7 +14,6 @@ const unlinkAsync = promisify(fs.unlink);
 router.route("/").post(multerUpload.single("image"), async (req, res) => {
   const newImage = new Image({
     userId: req.body.userId,
-    name: req.body.name,
     path: req.file.path,
   });
   try {
