@@ -1,5 +1,3 @@
-export {};
-
 const express = require("express");
 let Product = require("../models/product.model");
 

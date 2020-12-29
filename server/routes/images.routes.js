@@ -1,5 +1,3 @@
-export {};
-
 const express = require("express");
 const Image = require("../models/image.model");
 const multerUpload = require("../config/multer");
