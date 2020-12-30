@@ -37,6 +37,12 @@ const Navbar = () => {
             </Link>
           </li>
 
+          <li className="navbar-item">
+            <Link to="/stripe" className="nav-link">
+              Stripe
+            </Link>
+          </li>
+
           {isAuthenticated ? (
             <>
               <li className="navbar-item">
