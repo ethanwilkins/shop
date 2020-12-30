@@ -50,6 +50,8 @@ typings/
 .env.test
 /server/.env
 /server/.env.test
+/client/.env
+/client/.env.test
 
 # misc
 .DS_Store

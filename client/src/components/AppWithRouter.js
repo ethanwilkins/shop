@@ -4,7 +4,7 @@ import { Router, Route, Switch, withRouter } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 import Home from "../pages/Home";
-import Stripe from "../pages/Stripe";
+import Checkout from "../pages/Checkout";
 import SignUp from "../pages/Users/SignUp";
 import Login from "../pages/Users/Login";
 import UsersList from "../pages/Users/List";
@@ -23,7 +23,7 @@ const Root = () => (
     <Container>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/stripe" component={Stripe} />
+        <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/products" component={ProductsList} />
         <Route exact path="/users" component={UsersList} />
         <Route exact path="/images" component={ImagesList} />

@@ -38,8 +38,8 @@ const Navbar = () => {
           </li>
 
           <li className="navbar-item">
-            <Link to="/stripe" className="nav-link">
-              Stripe
+            <Link to="/checkout" className="nav-link">
+              Checkout
             </Link>
           </li>
 
