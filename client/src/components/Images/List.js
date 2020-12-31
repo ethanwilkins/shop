@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 
 import { Delete } from "@material-ui/icons";
@@ -40,6 +41,10 @@ const List = ({ images }) => {
         })}
     </>
   );
+};
+
+List.propTypes = {
+  images: PropTypes.array.isRequired,
 };
 
 export default List;

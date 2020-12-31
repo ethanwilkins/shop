@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { FormGroup, TextField, Button } from "@material-ui/core";
-
 import useUsersStore from "../../stores/users.store";
 
 const UserForm = ({ user, isEditing }) => {
@@ -95,6 +95,11 @@ const UserForm = ({ user, isEditing }) => {
       </Button>
     </form>
   );
+};
+
+UserForm.propTypes = {
+  user: PropTypes.object.isRequired,
+  isEditing: PropTypes.bool.isRequired,
 };
 
 export default UserForm;
