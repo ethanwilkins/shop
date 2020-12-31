@@ -1,10 +1,11 @@
 const express = require("express");
 const router = new express.Router();
+const dotenv = require("dotenv");
+
+dotenv.config();
+const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET_KEY);
 
 const Product = require("../models/product.model");
-
-require("dotenv").config();
-const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET_KEY);
 
 router.post("/stripe/charge", async (req, res) => {
   console.log("stripe-routes.js 9 | route reached", req.body);

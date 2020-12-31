@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
 
 const app = express();
 const connection = mongoose.connection;
@@ -10,7 +11,7 @@ const usersRouter = require("./routes/users.routes");
 const imagesRouter = require("./routes/images.routes");
 const productsRouter = require("./routes/products.routes");
 
-require("dotenv").config();
+dotenv.config();
 const uri = process.env.DATABASE_URL;
 const port = process.env.PORT || 5000;
 
