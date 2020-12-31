@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 const app = express();
-const port = process.env.PORT || 5000;
 const connection = mongoose.connection;
 
 const usersRouter = require("./routes/users.routes");
@@ -13,6 +12,7 @@ const productsRouter = require("./routes/products.routes");
 
 require("dotenv").config();
 const uri = process.env.DATABASE_URL;
+const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());

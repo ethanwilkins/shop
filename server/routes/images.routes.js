@@ -1,7 +1,8 @@
 const express = require("express");
+const router = new express.Router();
+
 const Image = require("../models/image.model");
 const multerUpload = require("../config/multer");
-const router = new express.Router();
 
 // fs, promisify, and unlink to delete image file
 const fs = require("fs");

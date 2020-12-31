@@ -4,11 +4,11 @@ import { Elements } from "@stripe/react-stripe-js";
 
 import CheckoutForm from "../components/Checkout/CheckoutForm";
 
-const Checkout = () => {
-  const stripeTestPromise = loadStripe(
-    process.env.REACT_APP_STRIPE_TEST_PUBLIC_KEY
-  );
+const stripeTestPromise = loadStripe(
+  process.env.REACT_APP_STRIPE_TEST_PUBLIC_KEY
+);
 
+const Checkout = () => {
   return (
     <Elements stripe={stripeTestPromise}>
       <CheckoutForm />

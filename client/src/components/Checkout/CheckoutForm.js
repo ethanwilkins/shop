@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 const CheckoutForm = () => {
@@ -14,9 +15,21 @@ const CheckoutForm = () => {
 
     if (!error) {
       alert(`Stripe 23 | token generated! ${JSON.stringify(paymentMethod)}`);
-      //send token to backend here
+      try {
+        const { id } = paymentMethod;
+        const response = await axios.post("/products/stripe/charge", {
+          amount: 999,
+          id: id,
+        });
+        alert(`Stripe 35 | data ${response.data.success}`);
+        if (response.data.success) {
+          alert("CheckoutForm.js 25 | payment successful!");
+        }
+      } catch (error) {
+        alert(`CheckoutForm.js 28 | ${JSON.stringify(error)}`);
+      }
     } else {
-      alert(error.message);
+      alert(JSON.stringify(error.message));
     }
   };
 
