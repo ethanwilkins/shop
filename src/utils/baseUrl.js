@@ -1,6 +1,6 @@
 const baseUrl =
   process.env.NODE_ENV === "production"
-    ? "https://mern-stack-demo-store.now.sh"
+    ? "https://socialmaya.com"
     : "http://localhost:3000";
 
 export default baseUrl;
