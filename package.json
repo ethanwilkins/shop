@@ -17,16 +17,23 @@
     "@material-ui/icons": "^4.11.2",
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.11.0",
+    "stripe": "^8.129.0",
     "axios": "^0.21.1",
+    "bcrypt": "^5.0.0",
     "bootstrap": "^4.5.3",
     "classnames": "^2.2.6",
+    "is-empty": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
+    "mongoose": "^5.11.9",
+    "multer": "^1.4.2",
     "next": "10.0.4",
     "node-sass": "^5.0.0",
     "prop-types": "^15.7.2",
     "react": "17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-dom": "17.0.1",
+    "validator": "^13.5.2",
     "zustand": "^3.2.0"
   }
 }
