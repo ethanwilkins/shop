@@ -1,27 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
-
 import { Spinner } from "react-bootstrap";
-
+import baseUrl from "../../utils/baseUrl";
 import UserCard from "../../components/Users/Card";
 
-const List = () => {
-  const [users, setUsers] = useState(null);
-
-  useEffect(() => {
-    axios
-      .get("/users/")
-      .then((res) => {
-        setUsers(res.data);
-      })
-      .catch((err) => {
-        console.log("Users weren't able to load...");
-      });
-  }, []);
-
+const List = ({ users }) => {
   return (
     <>
-      {users ? (
+      {users && users.length ? (
         users.map((user) => {
           return <UserCard user={user} key={user._id} />;
         })
@@ -30,6 +16,12 @@ const List = () => {
       )}
     </>
   );
+};
+
+List.getInitialProps = async () => {
+  const url = `${baseUrl}/api/users`;
+  const response = await axios.get(url);
+  return { users: response.data };
 };
 
 export default List;

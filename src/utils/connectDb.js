@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
+
 const connection = {};
+const uri = process.env.DATABASE_URL;
 
 async function connectDb() {
   if (connection.isConnected) {
@@ -8,14 +10,18 @@ async function connectDb() {
     return;
   }
   // Use new database connection
-  const db = await mongoose.connect(process.env.MONGO_SRV, {
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  });
-  console.log("DB Connected");
-  connection.isConnected = db.connections[0].readyState;
+  mongoose
+    .connect(uri, {
+      useCreateIndex: true,
+      useFindAndModify: false,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    .then((db) => {
+      console.log("MongoDB connection established successfully 🌎\n");
+      connection.isConnected = db.connections[0].readyState;
+    })
+    .catch((err) => console.log(err));
 }
 
 export default connectDb;
