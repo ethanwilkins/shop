@@ -18,10 +18,13 @@ const List = ({ users }) => {
   );
 };
 
-List.getInitialProps = async () => {
+export async function getStaticProps() {
   const url = `${baseUrl}/api/users`;
   const response = await axios.get(url);
-  return { users: response.data };
-};
+  console.log(JSON.stringify(response.data));
+  return {
+    props: { users: response.data },
+  };
+}
 
 export default List;
