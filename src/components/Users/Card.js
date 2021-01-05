@@ -36,7 +36,9 @@ const Show = ({ user }) => {
           gutterBottom
         >
           <Link href={`/users/${name}`}>
-            <AccountCircle /> {name}
+            <a>
+              <AccountCircle /> {name}
+            </a>
           </Link>
         </Typography>
         <Typography variant="body2" component="p">
@@ -48,7 +50,9 @@ const Show = ({ user }) => {
       </CardContent>
       <CardActions classes={classes.actions}>
         <Link href={`/users_edit/${name}`}>
-          <Edit /> Edit
+          <a>
+            <Edit /> Edit
+          </a>
         </Link>
 
         <Link
@@ -58,7 +62,9 @@ const Show = ({ user }) => {
             deleteUser(_id)
           }
         >
-          <Delete /> Delete
+          <a>
+            <Delete /> Delete
+          </a>
         </Link>
       </CardActions>
     </Card>

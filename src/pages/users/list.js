@@ -23,7 +23,7 @@ export async function getStaticProps() {
   const response = await axios.get(url);
   console.log(JSON.stringify(response.data));
   return {
-    props: { users: response.data },
+    props: { users: response.data.users },
   };
 }
 
