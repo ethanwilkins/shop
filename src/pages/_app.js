@@ -1,18 +1,20 @@
-import App from "next/app";
 import "bootstrap/dist/css/bootstrap.min.css";
-
 import Layout from "../components/_App/Layout";
 import "../styles/globals.scss";
 
-class MyApp extends App {
-  render() {
-    const { Component, pageProps } = this.props;
-    return (
+import { StoreProvider } from "../utils/zustandProvider";
+import { useHydrate } from "../utils/initializeStore";
+
+const App = ({ Component, pageProps }) => {
+  const store = useHydrate(pageProps.initialZustandState);
+
+  return (
+    <StoreProvider store={store}>
       <Layout {...pageProps}>
         <Component {...pageProps} />
       </Layout>
-    );
-  }
-}
+    </StoreProvider>
+  );
+};
 
-export default MyApp;
+export default App;
