@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const Schema = mongoose.Schema;
+const { String } = mongoose.Schema.Types;
 
-const productSchema = new Schema(
+const ProductSchema = new mongoose.Schema(
   {
     userId: { type: String, required: true },
     name: { type: String, required: true },
@@ -13,6 +13,5 @@ const productSchema = new Schema(
   }
 );
 
-const Product = mongoose.model("Product", productSchema);
-
-module.exports = Product;
+export default mongoose.models.Product ||
+  mongoose.model("Product", ProductSchema);
