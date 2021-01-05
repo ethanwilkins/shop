@@ -19,7 +19,7 @@ const List = ({ users }) => {
 };
 
 export async function getStaticProps() {
-  const url = `${baseUrl}/api/users`;
+  const url = `${baseUrl}/api/users/list`;
   const response = await axios.get(url);
   return {
     props: { users: response.data.users },

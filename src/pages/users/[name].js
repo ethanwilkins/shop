@@ -3,22 +3,12 @@ import axios from "axios";
 
 import { Spinner } from "react-bootstrap";
 
+import baseUrl from "../../utils/baseUrl";
 import UserCard from "../../components/Users/Card";
 import ImagesList from "../../components/Images/List";
 
-const Show = ({ match }) => {
-  const [user, setUser] = useState(null);
+const Show = ({ user }) => {
   const [images, setImages] = useState(null);
-  const userName = match.params.name;
-
-  useEffect(() => {
-    axios
-      .get(`/users/${userName}`)
-      .then((res) => {
-        setUser(res.data.user);
-      })
-      .catch((err) => {});
-  }, [userName]);
 
   useEffect(() => {
     axios
@@ -37,5 +27,15 @@ const Show = ({ match }) => {
     </>
   );
 };
+
+export async function getServerSideProps(ctx) {
+  const { name } = ctx.query;
+  const url = `${baseUrl}/api/users/${name}`;
+  const response = await axios.get(url);
+
+  return {
+    props: { user: response.data.user },
+  };
+}
 
 export default Show;

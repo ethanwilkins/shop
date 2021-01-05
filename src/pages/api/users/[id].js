@@ -1,6 +1,6 @@
-import User from "../../models/user.model";
+import User from "../../../models/user.model";
 import jwt from "jsonwebtoken";
-import connectDb from "../../utils/connectDb";
+import connectDb from "../../../utils/connectDb";
 
 connectDb();
 
@@ -22,11 +22,13 @@ export default async (req, res) => {
 
 // Get a user by their name
 const handleGetRequest = async (req, res) => {
-  const { name } = req.params;
+  const {
+    query: { id },
+  } = req;
 
   try {
     const user = await User.findOne({
-      name: new RegExp("^" + name + "$", "i"),
+      name: new RegExp("^" + id + "$", "i"),
     });
 
     if (user) {
@@ -41,7 +43,9 @@ const handleGetRequest = async (req, res) => {
 
 // Update a user
 const handlePutRequest = async (req, res) => {
-  const { id } = req.params;
+  const {
+    query: { id },
+  } = req;
 
   try {
     const user = await User.findOneAndUpdate(
@@ -81,8 +85,12 @@ const handlePutRequest = async (req, res) => {
 
 // Delete a user
 const handleDeleteRequest = async (req, res) => {
+  const {
+    query: { id },
+  } = req;
+
   try {
-    await User.deleteOne({ _id: req.params.id }).exec();
+    await User.deleteOne({ _id: id }).exec();
     res.status(200).json({ message: "Successfully deleted user." });
   } catch (err) {
     res.status(500).json({ message: err });
