@@ -2,12 +2,22 @@ import React from "react";
 import Link from "next/link";
 import { Nav } from "react-bootstrap";
 
-import useUsersStore from "../../stores/users.store";
+import { useStore } from "../../utils/zustandProvider";
+import shallow from "zustand/shallow";
+
+const useUsersStore = () => {
+  return useStore(
+    (store) => ({
+      isAuthenticated: store.isAuthenticated,
+      user: store.user,
+      logoutUser: store.logoutUser,
+    }),
+    shallow
+  );
+};
 
 const Header = () => {
-  const isAuthenticated = useUsersStore((state) => state.isAuthenticated);
-  const user = useUsersStore((state) => state.user);
-  const { logoutUser } = useUsersStore();
+  const { isAuthenticated, user, logoutUser } = useUsersStore();
 
   return (
     <nav

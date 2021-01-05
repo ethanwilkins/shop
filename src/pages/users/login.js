@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
-import useUsersStore from "../../stores/users.store";
+import { useStore } from "../../utils/zustandProvider";
+import shallow from "zustand/shallow";
+
+const useUsersStore = () => {
+  return useStore(
+    (store) => ({
+      loginUser: store.loginUser,
+    }),
+    shallow
+  );
+};
 
 const Login = () => {
   const [email, setEmail] = useState("");
