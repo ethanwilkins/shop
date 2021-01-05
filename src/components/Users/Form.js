@@ -98,8 +98,8 @@ const UserForm = ({ user, isEditing }) => {
 };
 
 UserForm.propTypes = {
-  user: PropTypes.object.isRequired,
-  isEditing: PropTypes.bool.isRequired,
+  user: PropTypes.object,
+  isEditing: PropTypes.bool,
 };
 
 export default UserForm;

@@ -3,6 +3,7 @@ import { combine } from "zustand/middleware";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { setAuthToken } from "../utils/auth";
+import baseUrl from "../utils/baseUrl";
 
 const useUsersStore = create(
   combine(
@@ -55,7 +56,7 @@ const useUsersStore = create(
 
       loginUser: (user) => {
         axios
-          .post("/users/login", user)
+          .post(`${baseUrl}/api/users/login`, user)
           .then((res) => {
             const { token } = res.data;
             localStorage.setItem("jwtToken", token);
