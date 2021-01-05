@@ -1,7 +1,7 @@
 const validator = require("validator");
 const isEmpty = require("is-empty");
 
-function validateLoginInput(data) {
+function validateLogin(data) {
   let errors = {};
 
   /* eslint-disable no-param-reassign */
@@ -31,7 +31,7 @@ function validateLoginInput(data) {
   };
 }
 
-function validateRegisterInput(data) {
+function validateSignup(data) {
   let errors = {};
 
   /* eslint-disable no-param-reassign */
@@ -85,4 +85,4 @@ function validateRegisterInput(data) {
   };
 }
 
-export { validateLoginInput, validateRegisterInput };
+export { validateLogin, validateSignup };
