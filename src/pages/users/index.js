@@ -4,17 +4,12 @@ import { Spinner } from "react-bootstrap";
 import baseUrl from "../../utils/baseUrl";
 import UserCard from "../../components/Users/Card";
 
-const Index = () => {
+const Index = ({ usersAsProps }) => {
   const [users, setUsers] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`${baseUrl}/api/users/list`)
-      .then((res) => {
-        setUsers(res.data.users);
-      })
-      .catch((err) => {});
-  }, []);
+    setUsers(usersAsProps);
+  }, [usersAsProps]);
 
   const deleteUser = (userId) => {
     axios
@@ -38,6 +33,16 @@ const Index = () => {
       )}
     </>
   );
+};
+
+export const getStaticProps = async () => {
+  const response = await axios.get(`${baseUrl}/api/users/list`);
+
+  return {
+    props: {
+      usersAsProps: response.data.users,
+    },
+  };
 };
 
 export default Index;
