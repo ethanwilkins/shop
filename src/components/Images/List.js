@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { Delete } from "@material-ui/icons";
 import { Spinner } from "react-bootstrap";
+import baseUrl from "../../utils/baseUrl";
 
 const List = ({ images, deleteImage }) => {
   return (
@@ -10,11 +11,11 @@ const List = ({ images, deleteImage }) => {
           {images
             .slice()
             .reverse()
-            .map(({ _id, data }) => {
+            .map(({ _id, path }) => {
               return (
                 <div key={_id}>
                   <img
-                    src={`data:image/jpeg;base64,${data}`}
+                    src={baseUrl + path}
                     alt="Data could not render."
                     style={{ width: 300, display: "block" }}
                   />

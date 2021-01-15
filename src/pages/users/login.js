@@ -1,23 +1,36 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useMutation } from "@apollo/client";
+import Router from "next/router";
 
+import { SIGN_IN } from "../../apollo/client/mutations";
 import useUsersStore from "../../stores/users.store";
+import { setAuthToken } from "../../utils/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setCurrentUser } = useUsersStore();
+  const [signIn] = useMutation(SIGN_IN);
 
-  const { loginUser } = useUsersStore();
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const user = {
-      email: email,
-      password: password,
-    };
+    try {
+      const { data } = await signIn({
+        variables: {
+          email: email,
+          password: password,
+        },
+      });
 
-    loginUser(user);
+      setCurrentUser(data.signIn.user);
+      localStorage.setItem("jwtToken", data.signIn.token);
+      setAuthToken(data.signIn.token);
+      Router.push("/");
+    } catch (err) {
+      alert("Sign in not successful...");
+    }
   };
 
   return (

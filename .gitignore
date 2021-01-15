@@ -12,6 +12,7 @@
 
 # uploads
 /uploads
+/public/uploads
 
 # testing
 /coverage
