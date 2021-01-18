@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const { String, Number } = mongoose.Schema.Types;
+const { String } = mongoose.Schema.Types;
 
 const ImageSchema = new mongoose.Schema(
   {
@@ -8,9 +8,9 @@ const ImageSchema = new mongoose.Schema(
       type: String,
     },
     productId: {
-      type: Number,
+      type: String,
     },
-    data: {
+    path: {
       type: String,
       required: true,
     },

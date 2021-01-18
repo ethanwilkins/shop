@@ -22,6 +22,11 @@ const useStyles = makeStyles({
 
 const Show = ({ user, deleteUser }) => {
   const { name, email, _id, createdAt } = user;
+  const date = new Date(parseInt(createdAt)).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
   const classes = useStyles();
 
   return (
@@ -39,7 +44,7 @@ const Show = ({ user, deleteUser }) => {
           </Link>
         </Typography>
         <Typography variant="body2" component="p">
-          Joined {createdAt}
+          Joined {date}
         </Typography>
         <Typography variant="body2" component="p">
           {email}

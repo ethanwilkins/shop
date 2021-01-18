@@ -1,23 +1,30 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { useQuery, useMutation } from "@apollo/client";
 import { Spinner } from "react-bootstrap";
-import baseUrl from "../../utils/baseUrl";
-import UserCard from "../../components/Users/Card";
 
-const Index = ({ usersAsProps }) => {
+import UserCard from "../../components/Users/Card";
+import { USERS } from "../../apollo/client/queries";
+import { DELETE_USER } from "../../apollo/client/mutations";
+
+const Index = () => {
   const [users, setUsers] = useState(null);
+  const [deleteUser] = useMutation(DELETE_USER);
+  const { data } = useQuery(USERS);
 
   useEffect(() => {
-    setUsers(usersAsProps);
-  }, [usersAsProps]);
+    setUsers(data ? data.allUsers : data);
+  }, [data]);
 
-  const deleteUser = (userId) => {
-    axios
-      .delete(`${baseUrl}/api/users/${userId}`)
-      .then((res) => {
-        setUsers(users.filter((user) => user._id !== userId));
-      })
-      .catch((err) => {});
+  const deleteUserHandler = async (userId) => {
+    try {
+      await deleteUser({
+        variables: {
+          id: userId,
+        },
+      });
+      // Removes deleted user from state
+      setUsers(users.filter((user) => user._id !== userId));
+    } catch {}
   };
 
   return (
@@ -25,7 +32,11 @@ const Index = ({ usersAsProps }) => {
       {users ? (
         users.map((user) => {
           return (
-            <UserCard user={user} deleteUser={deleteUser} key={user._id} />
+            <UserCard
+              user={user}
+              deleteUser={deleteUserHandler}
+              key={user._id}
+            />
           );
         })
       ) : (
@@ -33,16 +44,6 @@ const Index = ({ usersAsProps }) => {
       )}
     </>
   );
-};
-
-export const getStaticProps = async () => {
-  const response = await axios.get(`${baseUrl}/api/users/list`);
-
-  return {
-    props: {
-      usersAsProps: response.data.users,
-    },
-  };
 };
 
 export default Index;

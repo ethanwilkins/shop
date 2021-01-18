@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useMutation } from "@apollo/client";
 import PropTypes from "prop-types";
+import Router from "next/router";
 import { FormGroup, TextField, Button } from "@material-ui/core";
+
 import useUsersStore from "../../stores/users.store";
+import { SIGN_UP, UPDATE_USER } from "../../apollo/client/mutations";
+import { setAuthToken } from "../../utils/auth";
 
 const UserForm = ({ user, isEditing }) => {
   const [userName, setUserName] = useState("");
@@ -9,7 +14,10 @@ const UserForm = ({ user, isEditing }) => {
   const [userPassword, setUserPassword] = useState("");
   const [userPasswordConfirm, setUserPasswordConfirm] = useState("");
 
-  const { updateUser, signUpUser } = useUsersStore();
+  const currentUser = useUsersStore((state) => state.user);
+  const { setCurrentUser } = useUsersStore();
+  const [signUp] = useMutation(SIGN_UP);
+  const [updateUser] = useMutation(UPDATE_USER);
 
   useEffect(() => {
     if (isEditing) {
@@ -18,21 +26,47 @@ const UserForm = ({ user, isEditing }) => {
     }
   }, [user, isEditing]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userObj = {
-      name: userName,
-      email: userEmail,
-      password: userPassword,
-      passwordConfirm: userPasswordConfirm,
-    };
-
     if (isEditing) {
-      userObj._id = user._id;
-      updateUser(userObj);
+      // Update a user
+      try {
+        const { data } = await updateUser({
+          variables: {
+            id: user._id,
+            name: userName,
+            email: userEmail,
+          },
+        });
+
+        if (currentUser._id === user._id) {
+          localStorage.setItem("jwtToken", data.updateUser.token);
+          setAuthToken(data.updateUser.token);
+          setCurrentUser(data.updateUser.user);
+        }
+
+        Router.push(`/users/${data.updateUser.user.name}`);
+      } catch {
+        alert("Failed to update user...");
+      }
     } else {
-      signUpUser(userObj);
+      // Sign up new user
+      try {
+        const { data } = await signUp({
+          variables: {
+            name: userName,
+            email: userEmail,
+            password: userPassword,
+            passwordConfirm: userPasswordConfirm,
+          },
+        });
+
+        setCurrentUser(data.signUp.user);
+        localStorage.setItem("jwtToken", data.signUp.token);
+        setAuthToken(data.signUp.token);
+        Router.push("/");
+      } catch {}
     }
   };
 

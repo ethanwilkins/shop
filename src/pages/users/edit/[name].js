@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-
+import { useQuery } from "@apollo/client";
 import { Spinner } from "react-bootstrap";
+import { useRouter } from "next/router";
 
-import baseUrl from "../../../utils/baseUrl";
 import UserForm from "../../../components/Users/Form";
+import { USER } from "../../../apollo/client/queries";
 
-const Edit = ({ user }) => {
+const Edit = () => {
+  const { query } = useRouter();
+  const [user, setUser] = useState(null);
+
+  const { data } = useQuery(USER, {
+    variables: { name: query.name },
+  });
+
+  useEffect(() => {
+    setUser(data ? data.user : data);
+  }, [data]);
+
   return (
     <>
       {user ? (
@@ -17,15 +28,5 @@ const Edit = ({ user }) => {
     </>
   );
 };
-
-export async function getServerSideProps(ctx) {
-  const { name } = ctx.query;
-  const url = `${baseUrl}/api/users/${name}`;
-  const response = await axios.get(url);
-
-  return {
-    props: { user: response.data.user },
-  };
-}
 
 export default Edit;

@@ -1,65 +1,51 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import baseUrl from "../../utils/baseUrl";
+import { useQuery, useMutation } from "@apollo/client";
+
 import ImagesForm from "../../components/Images/Form";
 import ImagesList from "../../components/Images/List";
 import useUsersStore from "../../stores/users.store";
+import { IMAGES } from "../../apollo/client/queries";
+import { UPLOAD_IMAGE, DELETE_IMAGE } from "../../apollo/client/mutations";
 
-const Index = ({ imagesAsProps }) => {
+const Index = () => {
   const [images, setImages] = useState(null);
   const user = useUsersStore((state) => state.user);
+  const [uploadImage] = useMutation(UPLOAD_IMAGE);
+  const [deleteImage] = useMutation(DELETE_IMAGE);
+  const { data } = useQuery(IMAGES);
 
   useEffect(() => {
-    setImages(imagesAsProps);
-  }, [imagesAsProps]);
+    setImages(data ? data.allImages : data);
+  }, [data]);
 
-  const handleSubmit = (e, image) => {
+  const handleSubmit = async (e, image) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("image", image);
-
-    axios
-      .post(`${baseUrl}/api/images/upload`, formData, {
-        // user._id sent as header as body parsing is disabled
-        headers: { uid: user._id },
-      })
-      .then((res) => {
-        e.target.reset();
-        setImages([...images, res.data.image]);
-      })
-      .catch(() => {
-        alert("Was not able to upload the image.");
-      });
+    const { data } = await uploadImage({
+      variables: { image: image, userId: user._id },
+    });
+    e.target.reset();
+    setImages([...images, data.uploadImage.image]);
   };
 
-  const deleteImage = (id) => {
-    axios
-      .delete(`${baseUrl}/api/images/${id}`)
-      .then(() => {
-        setImages(images.filter((image) => image._id !== id));
-      })
-      .catch(() => {
-        alert("Was not able to delete the image.");
+  const deleteImageHandler = async (id) => {
+    try {
+      await deleteImage({
+        variables: {
+          id,
+        },
       });
+      // Removes deleted image from state
+      setImages(images.filter((image) => image._id !== id));
+    } catch {}
   };
 
   return (
     <>
       <ImagesForm handleSubmit={handleSubmit} />
-      <ImagesList images={images} deleteImage={deleteImage} />
+      <ImagesList images={images} deleteImage={deleteImageHandler} />
     </>
   );
-};
-
-export const getStaticProps = async () => {
-  const response = await axios.get(`${baseUrl}/api/images/list`);
-
-  return {
-    props: {
-      imagesAsProps: response.data.images,
-    },
-  };
 };
 
 export default Index;
