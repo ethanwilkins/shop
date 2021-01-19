@@ -1,11 +1,12 @@
 export default `
 
 type User {
-  _id: ID!
+  id: ID!
   name: String!
   email: String!
   password: String!
   createdAt: String!
+  updatedAt: String!
 }
 
 input SignUpInput {

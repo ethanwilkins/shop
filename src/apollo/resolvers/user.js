@@ -1,16 +1,20 @@
 import { UserInputError } from "apollo-server-micro";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { PrismaClient } from "@prisma/client";
 
-import User from "../../models/user.model";
 import { validateSignup, validateLogin } from "../../utils/validation";
+
+const prisma = new PrismaClient();
 
 const userResolvers = {
   Query: {
-    user: async (_, args) => {
+    user: async (_, { name }) => {
       try {
-        const user = await User.findOne({
-          name: new RegExp("^" + args.name + "$", "i"),
+        const user = await prisma.user.findFirst({
+          where: {
+            name: name,
+          },
         });
         return user;
       } catch (error) {
@@ -20,7 +24,7 @@ const userResolvers = {
 
     allUsers: async () => {
       try {
-        const users = await User.find();
+        const users = await prisma.user.findMany();
         return users;
       } catch (error) {
         throw error;
@@ -29,29 +33,37 @@ const userResolvers = {
   },
 
   Mutation: {
-    async signUp(_, args) {
-      const { errors, isValid } = validateSignup(args.input);
+    async signUp(_, { input }) {
+      const { email, name, password } = input;
+      const { errors, isValid } = validateSignup(input);
 
       if (!isValid) {
         throw new UserInputError(JSON.stringify(errors));
       }
 
       try {
-        const userFound = await User.find({ email: args.input.email }).exec();
+        const userFound = await prisma.user.findMany({
+          where: {
+            email: email,
+          },
+        });
+
         if (userFound.length > 0) {
           throw new UserInputError("Email already exists.");
         }
 
-        const hash = await bcrypt.hash(args.input.password, 10);
+        const hash = await bcrypt.hash(password, 10);
 
-        let user = await new User({
-          email: args.input.email,
-          name: args.input.name,
-          password: hash,
-        }).save();
+        const user = await prisma.user.create({
+          data: {
+            email: email,
+            name: name,
+            password: hash,
+          },
+        });
 
         const jwtPayload = {
-          _id: user._id,
+          id: user.id,
           name: user.name,
           email: user.email,
         };
@@ -75,7 +87,11 @@ const userResolvers = {
       }
 
       try {
-        const user = await User.findOne({ email: email }).exec();
+        const user = await prisma.user.findFirst({
+          where: {
+            email: email,
+          },
+        });
         if (!user) {
           throw new UserInputError("No user exists with that email");
         }
@@ -84,7 +100,7 @@ const userResolvers = {
 
         if (passwordMatch) {
           const jwtPayload = {
-            _id: user._id,
+            id: user.id,
             name: user.name,
             email: user.email,
           };
@@ -101,34 +117,21 @@ const userResolvers = {
       }
     },
 
-    async updateUser(_, args) {
+    async updateUser(_, { id, input }) {
+      const { email, name } = input;
+
       try {
-        const user = await User.findOneAndUpdate(
-          { _id: args.id },
-          {
-            $set: {
-              email: args.input.email,
-              name: args.input.name,
-            },
-          },
-          { new: true, upsert: true, setDefaultsOnInsert: true },
-          (err) => {
-            if (
-              err != null &&
-              err.name === "MongoError" &&
-              err.code === 11000
-            ) {
-              throw new UserInputError("This email is already in use.");
-            }
-          }
-        );
+        const user = await prisma.user.update({
+          where: { id: parseInt(id) },
+          data: { email: email, name: name },
+        });
 
         if (!user) throw new Error("User not found.");
 
         const jwtPayload = {
           name: user.name,
           email: user.email,
-          _id: user._id,
+          id: user.id,
         };
 
         const token = jwt.sign(jwtPayload, process.env.JWT_KEY, {
@@ -141,9 +144,11 @@ const userResolvers = {
       }
     },
 
-    async deleteUser(_, args) {
+    async deleteUser(_, { id }) {
       try {
-        await User.deleteOne({ _id: args.id }).exec();
+        await prisma.user.delete({
+          where: { id: parseInt(id) },
+        });
         return true;
       } catch (err) {
         throw new Error(err);

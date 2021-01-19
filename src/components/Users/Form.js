@@ -34,22 +34,20 @@ const UserForm = ({ user, isEditing }) => {
       try {
         const { data } = await updateUser({
           variables: {
-            id: user._id,
+            id: user.id,
             name: userName,
             email: userEmail,
           },
         });
 
-        if (currentUser._id === user._id) {
+        if (currentUser.id === user.id) {
           localStorage.setItem("jwtToken", data.updateUser.token);
           setAuthToken(data.updateUser.token);
           setCurrentUser(data.updateUser.user);
         }
 
         Router.push(`/users/${data.updateUser.user.name}`);
-      } catch {
-        alert("Failed to update user...");
-      }
+      } catch {}
     } else {
       // Sign up new user
       try {

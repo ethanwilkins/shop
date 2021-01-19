@@ -1,11 +1,11 @@
 export default `
 
 type Image {
-  _id: ID!
-  userId: String!
-  productId: String
+  id: ID!
+  userId: Int!
   path: String!
   createdAt: String!
+  updatedAt: String!
 }
 
 type ImagePayload {

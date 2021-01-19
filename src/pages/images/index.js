@@ -22,7 +22,7 @@ const Index = () => {
     e.preventDefault();
 
     const { data } = await uploadImage({
-      variables: { image: image, userId: user._id },
+      variables: { image: image, userId: user.id },
     });
     e.target.reset();
     setImages([...images, data.uploadImage.image]);
@@ -36,7 +36,7 @@ const Index = () => {
         },
       });
       // Removes deleted image from state
-      setImages(images.filter((image) => image._id !== id));
+      setImages(images.filter((image) => image.id !== id));
     } catch {}
   };
 

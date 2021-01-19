@@ -23,7 +23,7 @@ const Index = () => {
         },
       });
       // Removes deleted user from state
-      setUsers(users.filter((user) => user._id !== userId));
+      setUsers(users.filter((user) => user.id !== userId));
     } catch {}
   };
 
@@ -35,7 +35,7 @@ const Index = () => {
             <UserCard
               user={user}
               deleteUser={deleteUserHandler}
-              key={user._id}
+              key={user.id}
             />
           );
         })
