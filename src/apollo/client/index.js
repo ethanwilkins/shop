@@ -1,34 +1,41 @@
 import { useMemo } from "react";
 import { ApolloClient } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
-
-import { cache } from "./cache";
+import { InMemoryCache } from "apollo-cache-inmemory";
 import baseUrl from "../../utils/baseUrl";
+import { defaults, resolvers } from "./localState";
 
-const GRAPHQL_URL = `${baseUrl}/api/graphql`;
 let apolloClient;
 
-function createIsomorphLink() {
+const cache = new InMemoryCache();
+const uri = `${baseUrl}/api/graphql`;
+
+const createIsomorphLink = () => {
   if (typeof window === "undefined") {
     const { SchemaLink } = require("@apollo/client/link/schema");
     const { schema } = require("../schema");
     return new SchemaLink({ schema });
   } else {
     return createUploadLink({
-      uri: GRAPHQL_URL,
+      uri,
     });
   }
-}
+};
 
-function createApolloClient() {
+const createApolloClient = () => {
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
     link: createIsomorphLink(),
-    cache: cache,
+    resolvers,
+    cache,
   });
-}
+};
 
-export function initializeApollo(initialState = null) {
+cache.writeData({
+  data: defaults,
+});
+
+export const initializeApollo = (initialState = null) => {
   const _apolloClient = apolloClient ?? createApolloClient();
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
@@ -42,9 +49,9 @@ export function initializeApollo(initialState = null) {
   if (!apolloClient) apolloClient = _apolloClient;
 
   return _apolloClient;
-}
+};
 
-export function useApollo(initialState) {
+export const useApollo = (initialState) => {
   const store = useMemo(() => initializeApollo(initialState), [initialState]);
   return store;
-}
+};

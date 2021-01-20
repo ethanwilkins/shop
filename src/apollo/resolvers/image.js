@@ -1,9 +1,6 @@
 import { GraphQLUpload } from "apollo-server-micro";
-import { PrismaClient } from "@prisma/client";
-
 import saveImage from "../../utils/saveImage";
-
-const prisma = new PrismaClient();
+import prisma from "../../utils/initPrisma";
 
 // fs, promisify, and unlink to delete img
 import fs from "fs";

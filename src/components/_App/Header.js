@@ -1,13 +1,43 @@
-import React from "react";
 import Link from "next/link";
+import { useEffect } from "react";
+import jwtDecode from "jwt-decode";
 import { Nav } from "react-bootstrap";
+import { useQuery, useMutation } from "@apollo/client";
 
-import useUsersStore from "../../stores/users.store";
+import { setAuthToken } from "../../utils/auth";
+import { CURRENT_USER } from "../../apollo/client/queries";
+import { LOGOUT_USER, SET_CURRENT_USER } from "../../apollo/client/mutations";
 
 const Header = () => {
-  const isAuthenticated = useUsersStore((state) => state.isAuthenticated);
-  const user = useUsersStore((state) => state.user);
-  const { logoutUser } = useUsersStore();
+  const { data } = useQuery(CURRENT_USER);
+  const [logoutUser] = useMutation(LOGOUT_USER);
+  const [setCurrentUser] = useMutation(SET_CURRENT_USER);
+
+  useEffect(() => {
+    if (localStorage.jwtToken) {
+      setAuthToken(localStorage.jwtToken);
+      const decoded = jwtDecode(localStorage.jwtToken);
+      setCurrentUserMutate(decoded);
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
+        logoutUserMutate();
+      }
+    }
+  }, [setCurrentUser]);
+
+  const setCurrentUserMutate = async (user) => {
+    await setCurrentUser({
+      variables: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
+    });
+  };
+
+  const logoutUserMutate = async () => {
+    await logoutUser();
+  };
 
   return (
     <nav
@@ -44,11 +74,11 @@ const Header = () => {
             </Link>
           </li>
 
-          {isAuthenticated ? (
+          {data && data.user.isAuthenticated ? (
             <>
               <li className="navbar-item">
-                <Link href={`/users/${user.name}`} passHref>
-                  <Nav.Link className="nav-link">{user.name}</Nav.Link>
+                <Link href={`/users/${data.user.name}`} passHref>
+                  <Nav.Link className="nav-link">{data.user.name}</Nav.Link>
                 </Link>
               </li>
 
@@ -57,7 +87,7 @@ const Header = () => {
                   <Nav.Link
                     onClick={() =>
                       window.confirm("Are you sure you want to log out?") &&
-                      logoutUser()
+                      logoutUserMutate()
                     }
                     className="nav-link"
                   >

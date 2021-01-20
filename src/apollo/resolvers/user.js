@@ -1,11 +1,9 @@
 import { UserInputError } from "apollo-server-micro";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { PrismaClient } from "@prisma/client";
 
+import prisma from "../../utils/initPrisma";
 import { validateSignup, validateLogin } from "../../utils/validation";
-
-const prisma = new PrismaClient();
 
 const userResolvers = {
   Query: {
