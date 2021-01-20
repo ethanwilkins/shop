@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 });
 
 const Show = ({ user, deleteUser }) => {
-  const { name, email, _id, createdAt } = user;
+  const { name, email, id, createdAt } = user;
   const date = new Date(parseInt(createdAt)).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -61,7 +61,7 @@ const Show = ({ user, deleteUser }) => {
           <a
             onClick={() =>
               window.confirm("Are you sure you want to delete this user?") &&
-              deleteUser(_id)
+              deleteUser(id)
             }
           >
             <Delete /> Delete

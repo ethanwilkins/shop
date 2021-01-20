@@ -1,8 +1,8 @@
 export default `
 
 type Product {
-  _id: ID!
-  userId: String!
+  id: ID!
+  userId: Int!
   name: String!
   description: String!
   createdAt: String!

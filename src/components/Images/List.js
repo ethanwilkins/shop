@@ -11,9 +11,9 @@ const List = ({ images, deleteImage }) => {
           {images
             .slice()
             .reverse()
-            .map(({ _id, path }) => {
+            .map(({ id, path }) => {
               return (
-                <div key={_id}>
+                <div key={id}>
                   <img
                     src={baseUrl + path}
                     alt="Data could not render."
@@ -24,7 +24,7 @@ const List = ({ images, deleteImage }) => {
                     onClick={() =>
                       window.confirm(
                         "Are you sure you want to delete this image?"
-                      ) && deleteImage(_id)
+                      ) && deleteImage(id)
                     }
                     style={{ cursor: "pointer", marginBottom: 12 }}
                   />

@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 export const USER = gql`
   query($name: String!) {
     user(name: $name) {
-      _id
+      id
       name
       email
       createdAt
@@ -14,7 +14,7 @@ export const USER = gql`
 export const USERS = gql`
   {
     allUsers {
-      _id
+      id
       name
       email
       createdAt
@@ -25,7 +25,7 @@ export const USERS = gql`
 export const IMAGES = gql`
   {
     allImages {
-      _id
+      id
       userId
       path
     }
@@ -35,7 +35,7 @@ export const IMAGES = gql`
 export const PRODUCTS = gql`
   {
     allProducts {
-      _id
+      id
       name
       description
     }
