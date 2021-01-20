@@ -1,3 +1,3 @@
 # Shop
 
-E-commerce site built with Next.js and GraphQL.
+E-commerce site built with Next.js, Apollo GraphQL, and Prisma.
