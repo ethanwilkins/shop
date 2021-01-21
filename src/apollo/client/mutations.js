@@ -73,3 +73,19 @@ export const DELETE_IMAGE = gql`
     deleteImage(id: $id)
   }
 `;
+
+export const SET_CURRENT_USER = gql`
+  mutation SetCurrentUserMutation(
+    $id: String!
+    $name: String!
+    $email: String!
+  ) {
+    setCurrentUser(user: { id: $id, name: $name, email: $email }) @client
+  }
+`;
+
+export const LOGOUT_USER = gql`
+  mutation LogoutUserMutation {
+    logoutUser @client
+  }
+`;

@@ -26,7 +26,9 @@ const Show = () => {
   useEffect(() => {
     if (user && imagesRes.data) {
       setImages(
-        imagesRes.data.allImages.filter((image) => image.userId === user._id)
+        imagesRes.data.allImages.filter(
+          (image) => image.userId === parseInt(user.id)
+        )
       );
     }
   }, [imagesRes.data, user]);

@@ -3,15 +3,15 @@ import { Form, Button } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import Router from "next/router";
 
-import { SIGN_IN } from "../../apollo/client/mutations";
-import useUsersStore from "../../stores/users.store";
+import { SIGN_IN, SET_CURRENT_USER } from "../../apollo/client/mutations";
 import { setAuthToken } from "../../utils/auth";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { setCurrentUser } = useUsersStore();
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+
   const [signIn] = useMutation(SIGN_IN);
+  const [setCurrentUser] = useMutation(SET_CURRENT_USER);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,14 +19,22 @@ const Login = () => {
     try {
       const { data } = await signIn({
         variables: {
-          email: email,
-          password: password,
+          email: userEmail,
+          password: userPassword,
         },
       });
 
-      setCurrentUser(data.signIn.user);
-      localStorage.setItem("jwtToken", data.signIn.token);
-      setAuthToken(data.signIn.token);
+      const { id, name, email, token } = data.signIn.user;
+      await setCurrentUser({
+        variables: {
+          id,
+          name,
+          email,
+        },
+      });
+
+      localStorage.setItem("jwtToken", token);
+      setAuthToken(token);
       Router.push("/");
     } catch (err) {
       alert("Sign in not successful...");
@@ -40,8 +48,8 @@ const Login = () => {
         <Form.Control
           type="text"
           placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
+          onChange={(e) => setUserEmail(e.target.value)}
+          value={userEmail}
         />
       </Form.Group>
 
@@ -50,8 +58,8 @@ const Login = () => {
         <Form.Control
           type="password"
           placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
+          onChange={(e) => setUserPassword(e.target.value)}
+          value={userPassword}
         />
       </Form.Group>
 

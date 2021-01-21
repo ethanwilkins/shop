@@ -41,3 +41,14 @@ export const PRODUCTS = gql`
     }
   }
 `;
+
+export const CURRENT_USER = gql`
+  {
+    user @client {
+      id
+      name
+      email
+      isAuthenticated
+    }
+  }
+`;

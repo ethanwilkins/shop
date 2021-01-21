@@ -1,11 +1,10 @@
 import Head from "next/head";
-
 import { Container } from "react-bootstrap";
 
 import Header from "./Header";
 import HeadContent from "./HeadContent";
 
-function Layout({ children }) {
+const Layout = ({ children }) => {
   return (
     <>
       <Head>
@@ -16,6 +15,6 @@ function Layout({ children }) {
       <Container>{children}</Container>
     </>
   );
-}
+};
 
 export default Layout;
