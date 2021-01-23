@@ -37,7 +37,7 @@ const Login = () => {
       setAuthToken(token);
       Router.push("/");
     } catch (err) {
-      alert("Sign in not successful...");
+      alert(err);
     }
   };
 

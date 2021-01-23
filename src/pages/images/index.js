@@ -20,12 +20,16 @@ const Index = () => {
   const handleSubmit = async (e, image) => {
     e.preventDefault();
 
-    if (currentUserRes.data) {
-      const { data } = await uploadImage({
-        variables: { image: image, userId: currentUserRes.data.user.id },
-      });
-      e.target.reset();
-      setImages([...images, data.uploadImage.image]);
+    try {
+      if (currentUserRes.data) {
+        const { data } = await uploadImage({
+          variables: { image: image, userId: currentUserRes.data.user.id },
+        });
+        e.target.reset();
+        setImages([...images, data.uploadImage.image]);
+      }
+    } catch (err) {
+      alert(err);
     }
   };
 

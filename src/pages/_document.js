@@ -8,7 +8,7 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta charSet="utf-8" />
-          <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+          <link rel="icon" href="/favicon.ico" />
           <meta name="theme-color" content="#000000" />
         </Head>
         <body>

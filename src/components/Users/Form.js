@@ -86,7 +86,9 @@ const UserForm = ({ user, isEditing }) => {
         localStorage.setItem("jwtToken", data.signUp.token);
         setAuthToken(data.signUp.token);
         Router.push("/");
-      } catch {}
+      } catch (err) {
+        alert(err);
+      }
     }
   };
 
