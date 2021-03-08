@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { Delete } from "@material-ui/icons";
 import { Spinner } from "react-bootstrap";
 import baseUrl from "../../utils/baseUrl";
@@ -37,11 +36,6 @@ const List = ({ images, deleteImage }) => {
       )}
     </>
   );
-};
-
-List.propTypes = {
-  images: PropTypes.array,
-  deleteImage: PropTypes.func.isRequired,
 };
 
 export default List;

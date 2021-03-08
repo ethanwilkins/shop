@@ -1,5 +1,7 @@
 import { createWriteStream } from "fs";
 
+const unlink = (path: any, a1: () => void) => {};
+
 // Saves image file within public/uploads/
 const saveImage = async (createReadStream, path) => {
   await new Promise((resolve, reject) => {

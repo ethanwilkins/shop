@@ -2,7 +2,7 @@ const validator = require("validator");
 const isEmpty = require("is-empty");
 
 function validateLogin(data) {
-  let errors = {};
+  let errors: ValidationError = {};
 
   /* eslint-disable no-param-reassign */
   data.email = !isEmpty(data.email) ? data.email : "";
@@ -32,7 +32,7 @@ function validateLogin(data) {
 }
 
 function validateSignup(data) {
-  let errors = {};
+  let errors: ValidationError = {};
 
   /* eslint-disable no-param-reassign */
   data.name = !isEmpty(data.name) ? data.name : "";

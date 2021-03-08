@@ -5,9 +5,9 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import baseUrl from "../../utils/baseUrl";
 import { defaults, resolvers } from "./localState";
 
-let apolloClient;
+let apolloClient: any;
 
-const cache = new InMemoryCache();
+const cache: any = new InMemoryCache();
 const uri = `${baseUrl}/api/graphql`;
 
 const createIsomorphLink = () => {
