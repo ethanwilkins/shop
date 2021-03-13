@@ -1,3 +1,8 @@
 # Shop
 
-E-commerce site built with Next.js, Apollo GraphQL, and Prisma.
+E-commerce site built with the following tech stack:
+
+- Apollo GraphQL
+- TypeScript
+- Next.js
+- Prisma
