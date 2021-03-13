@@ -16,7 +16,7 @@ const Header = () => {
   useEffect(() => {
     if (localStorage.jwtToken) {
       setAuthToken(localStorage.jwtToken);
-      const decoded = jwtDecode(localStorage.jwtToken);
+      const decoded: User = jwtDecode(localStorage.jwtToken);
       setCurrentUserMutate(decoded);
       const currentTime = Date.now() / 1000;
       if (decoded.exp < currentTime) {
@@ -25,7 +25,7 @@ const Header = () => {
     }
   }, [setCurrentUser]);
 
-  const setCurrentUserMutate = async (user) => {
+  const setCurrentUserMutate = async (user: User) => {
     await setCurrentUser({
       variables: {
         id: user.id,

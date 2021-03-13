@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import PropTypes from "prop-types";
 import Router from "next/router";
 import { FormGroup, TextField, Button } from "@material-ui/core";
 
@@ -12,7 +11,12 @@ import {
 import { CURRENT_USER } from "../../apollo/client/queries";
 import { setAuthToken } from "../../utils/auth";
 
-const UserForm = ({ user, isEditing }) => {
+interface Props {
+  user?: User;
+  isEditing?: boolean;
+}
+
+const UserForm = ({ user, isEditing }: Props) => {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -145,11 +149,6 @@ const UserForm = ({ user, isEditing }) => {
       </Button>
     </form>
   );
-};
-
-UserForm.propTypes = {
-  user: PropTypes.object,
-  isEditing: PropTypes.bool,
 };
 
 export default UserForm;

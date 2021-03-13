@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Link from "next/link";
 import {
   Card,
@@ -50,7 +49,7 @@ const Show = ({ user, deleteUser }) => {
           {email}
         </Typography>
       </CardContent>
-      <CardActions classes={classes.actions}>
+      <CardActions>
         <Link href={`/users/edit/${name}`}>
           <a>
             <Edit /> Edit
@@ -70,11 +69,6 @@ const Show = ({ user, deleteUser }) => {
       </CardActions>
     </Card>
   );
-};
-
-Show.propTypes = {
-  user: PropTypes.object.isRequired,
-  deleteUser: PropTypes.func.isRequired,
 };
 
 export default Show;

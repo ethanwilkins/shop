@@ -1,9 +1,8 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
+import { useState, ChangeEvent } from "react";
 import { FormGroup, Input, Button } from "@material-ui/core";
 
 const ImagesForm = ({ handleSubmit }) => {
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<File>(null);
 
   return (
     <form
@@ -13,7 +12,9 @@ const ImagesForm = ({ handleSubmit }) => {
       <FormGroup>
         <Input
           type="file"
-          onChange={(e) => setImage(e.target.files[0])}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setImage(e.target.files[0])
+          }
           style={{ fontSize: "10px", marginBottom: "12px" }}
         />
       </FormGroup>
@@ -23,10 +24,6 @@ const ImagesForm = ({ handleSubmit }) => {
       </Button>
     </form>
   );
-};
-
-ImagesForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
 };
 
 export default ImagesForm;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { Spinner } from "react-bootstrap";
 
 import UserCard from "../../components/Users/Card";
@@ -9,7 +9,7 @@ import { USER, IMAGES } from "../../apollo/client/queries";
 import { DELETE_USER, DELETE_IMAGE } from "../../apollo/client/mutations";
 
 const Show = () => {
-  const { query, router } = useRouter();
+  const { query } = useRouter();
   const [user, setUser] = useState(null);
   const [images, setImages] = useState(null);
   const userRes = useQuery(USER, {
@@ -40,7 +40,7 @@ const Show = () => {
           id: userId,
         },
       });
-      router.push("/users");
+      Router.push("/users");
     } catch {}
   };
 
